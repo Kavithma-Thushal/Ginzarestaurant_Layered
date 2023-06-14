@@ -266,7 +266,7 @@ public class ManageordersFormController implements Initializable {
 
         List<OrderDTO> orderDTOList = new ArrayList<>();
 
-        for (int i = 0; i < tblOrderCart.getItems().size(); i++) {
+        /*for (int i = 0; i < tblOrderCart.getItems().size(); i++) {
             OrderTM orderTM = observableList.get(i);
 
             OrderDTO dto = new OrderDTO(
@@ -275,7 +275,7 @@ public class ManageordersFormController implements Initializable {
                     orderTM.getUnitPrice()
             );
             orderDTOList.add(dto);
-        }
+        }*/
 
         boolean isPlaced = false;
         try {

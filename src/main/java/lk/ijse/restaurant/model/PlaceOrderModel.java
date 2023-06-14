@@ -20,7 +20,7 @@ public class PlaceOrderModel {
             if (isSaved) {
                 boolean isUpdated = ItemModel.updateQty(orderDTOList);
                 if (isUpdated) {
-                    boolean isOrdered = OrderDetailModel.save(oId, orderDTOList,LocalDate.now());
+                    boolean isOrdered = true;
                     if (isOrdered) {
                         connection.commit();
                         return true;

@@ -19,6 +19,7 @@ import lk.ijse.restaurant.model.SalaryModel;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -75,7 +76,7 @@ public class ManagesalaryFormController implements Initializable {
                         salaryDTO.getCode(),
                         salaryDTO.getEmployeeid(),
                         salaryDTO.getAmount(),
-                        salaryDTO.getDatetime()
+                        salaryDTO.getDate().toString()
                 ));
             }
             tblSalary.setItems(observableList);
@@ -91,7 +92,7 @@ public class ManagesalaryFormController implements Initializable {
                     txtCode.getText(),
                     txtEmployeeid.getText(),
                     Double.parseDouble(txtAmount.getText()),
-                    txtDatetime.getText()
+                    LocalDate.parse(txtDatetime.getText())
             );
 
             if (SalaryModel.save(salaryDTO) > 0) {
@@ -111,7 +112,7 @@ public class ManagesalaryFormController implements Initializable {
             if (salaryDTO != null) {
                 txtEmployeeid.setText(salaryDTO.getEmployeeid());
                 txtAmount.setText(String.valueOf(salaryDTO.getAmount()));
-                txtDatetime.setText(String.valueOf(salaryDTO.getDatetime()));
+                txtDatetime.setText(String.valueOf(salaryDTO.getDate()));
             }
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Please try again...!").show();
@@ -125,7 +126,7 @@ public class ManagesalaryFormController implements Initializable {
                     txtCode.getText(),
                     txtEmployeeid.getText(),
                     Double.parseDouble(txtAmount.getText()),
-                    txtDatetime.getText()
+                    LocalDate.parse(txtDatetime.getText())
             );
 
             if (SalaryModel.update(salaryDTO) > 0) {

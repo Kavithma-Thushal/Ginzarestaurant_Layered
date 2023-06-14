@@ -11,6 +11,5 @@ public class Order_Details {
     private String orderId;
     private String itemCode;
     private Integer qty;
-    private Double total;
     private LocalDate date;
 }

@@ -17,7 +17,7 @@ public class SalaryModel {
                 salaryDTO.getCode(),
                 salaryDTO.getEmployeeid(),
                 salaryDTO.getAmount(),
-                salaryDTO.getDatetime()
+                salaryDTO.getDate()
         );
     }
 
@@ -31,7 +31,7 @@ public class SalaryModel {
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getDouble(3),
-                    resultSet.getString(4)
+                    resultSet.getDate(4).toLocalDate()
             );
         }
         return null;
@@ -44,7 +44,7 @@ public class SalaryModel {
                 sql,
                 salaryDTO.getEmployeeid(),
                 salaryDTO.getAmount(),
-                salaryDTO.getDatetime(),
+                salaryDTO.getDate(),
                 salaryDTO.getCode()
         );
     }
@@ -65,7 +65,7 @@ public class SalaryModel {
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getDouble(3),
-                    resultSet.getString(4)
+                    resultSet.getDate(4).toLocalDate()
             );
             salaryDTOList.add(salaryDTO);
         }

@@ -9,9 +9,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class Delivery {
     private String code;
-    private String customerId;
     private String employeeId;
+    private String customerId;
     private String orderId;
+    private String details;
     private String location;
-    private LocalDate date;
 }

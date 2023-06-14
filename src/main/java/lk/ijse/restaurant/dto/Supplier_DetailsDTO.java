@@ -11,5 +11,4 @@ public class Supplier_DetailsDTO {
     private String supplierId;
     private String itemCode;
     private Integer qty;
-    private LocalDate date;
 }

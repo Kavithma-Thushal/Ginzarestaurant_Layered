@@ -11,5 +11,4 @@ public class Supplier_Details {
     private String supplierId;
     private String itemCode;
     private Integer qty;
-    private LocalDate date;
 }
