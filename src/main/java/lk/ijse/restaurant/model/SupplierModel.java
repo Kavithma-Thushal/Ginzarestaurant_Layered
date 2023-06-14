@@ -1,6 +1,6 @@
 package lk.ijse.restaurant.model;
 
-import lk.ijse.restaurant.dto.Supplier;
+import lk.ijse.restaurant.dto.SupplierDTO;
 import lk.ijse.restaurant.util.CrudUtil;
 
 import java.sql.ResultSet;
@@ -10,27 +10,27 @@ import java.util.List;
 
 public class SupplierModel {
 
-    public static int save(Supplier supplier) throws SQLException {
+    public static int save(SupplierDTO supplierDTO) throws SQLException {
 
         String sql = "INSERT INTO suppliers VALUES (?,?,?,?)";
 
         return CrudUtil.execute(
                 sql,
-                supplier.getId(),
-                supplier.getName(),
-                supplier.getContact(),
-                supplier.getAddress()
+                supplierDTO.getId(),
+                supplierDTO.getName(),
+                supplierDTO.getContact(),
+                supplierDTO.getAddress()
         );
     }
 
-    public static Supplier search(String id) throws SQLException {
+    public static SupplierDTO search(String id) throws SQLException {
 
         String sql = "SELECT * FROM suppliers WHERE id=?";
 
         ResultSet resultSet = CrudUtil.execute(sql, id);
 
         if (resultSet.next()) {
-            return new Supplier(
+            return new SupplierDTO(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
@@ -40,16 +40,16 @@ public class SupplierModel {
         return null;
     }
 
-    public static int update(Supplier supplier) throws SQLException {
+    public static int update(SupplierDTO supplierDTO) throws SQLException {
 
         String sql = "UPDATE suppliers SET name=? , contact=? , address=? WHERE id=?";
 
         return CrudUtil.execute(
                 sql,
-                supplier.getName(),
-                supplier.getContact(),
-                supplier.getAddress(),
-                supplier.getId()
+                supplierDTO.getName(),
+                supplierDTO.getContact(),
+                supplierDTO.getAddress(),
+                supplierDTO.getId()
         );
     }
 
@@ -58,21 +58,21 @@ public class SupplierModel {
         return CrudUtil.execute(sql, id);
     }
 
-    public static List<Supplier> getAll() throws SQLException {
+    public static List<SupplierDTO> getAll() throws SQLException {
 
-        List<Supplier> supplierList = new ArrayList<>();
+        List<SupplierDTO> supplierDTOList = new ArrayList<>();
         String sql = "SELECT * FROM suppliers";
         ResultSet resultSet = CrudUtil.execute(sql);
 
         while (resultSet.next()) {
-            Supplier supplier= new Supplier(
+            SupplierDTO supplierDTO = new SupplierDTO(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
                     resultSet.getString(4)
             );
-            supplierList.add(supplier);
+            supplierDTOList.add(supplierDTO);
         }
-        return supplierList;
+        return supplierDTOList;
     }
 }

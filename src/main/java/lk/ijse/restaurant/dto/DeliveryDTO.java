@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class Delivery {
+public class DeliveryDTO {
     private String code;
     private String employeeid;
     private String customerid;

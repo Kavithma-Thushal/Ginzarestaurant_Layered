@@ -12,7 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.restaurant.dto.Supplier;
+import lk.ijse.restaurant.dto.SupplierDTO;
 import lk.ijse.restaurant.view.SupplierTM;
 import lk.ijse.restaurant.model.SupplierModel;
 
@@ -68,14 +68,14 @@ public class ManagesuppliersFormController implements Initializable {
     private void getAll() {
         try {
             ObservableList<SupplierTM> observableList = FXCollections.observableArrayList();
-            List<Supplier> supplierList = SupplierModel.getAll();
+            List<SupplierDTO> supplierDTOList = SupplierModel.getAll();
 
-            for (Supplier supplier : supplierList) {
+            for (SupplierDTO supplierDTO : supplierDTOList) {
                 observableList.add(new SupplierTM(
-                        supplier.getId(),
-                        supplier.getName(),
-                        supplier.getContact(),
-                        supplier.getAddress()
+                        supplierDTO.getId(),
+                        supplierDTO.getName(),
+                        supplierDTO.getContact(),
+                        supplierDTO.getAddress()
                 ));
             }
             tblsupplier.setItems(observableList);
@@ -87,14 +87,14 @@ public class ManagesuppliersFormController implements Initializable {
     @FXML
     private void saveOnAction(ActionEvent event) {
         try {
-            Supplier supplier = new Supplier(
+            SupplierDTO supplierDTO = new SupplierDTO(
                     txtId.getText(),
                     txtName.getText(),
                     txtContact.getText(),
                     txtAddress.getText()
             );
 
-            if (SupplierModel.save(supplier) > 0) {
+            if (SupplierModel.save(supplierDTO) > 0) {
 
                 new Alert(Alert.AlertType.CONFIRMATION, "Saved Successfully...!").show();
                 tblsupplier.refresh();
@@ -109,11 +109,11 @@ public class ManagesuppliersFormController implements Initializable {
     @FXML
     private void searchOnAction(ActionEvent event) {
         try {
-            Supplier supplier = SupplierModel.search(txtId.getText());
-            if (supplier != null) {
-                txtName.setText(supplier.getName());
-                txtContact.setText(supplier.getContact());
-                txtAddress.setText(supplier.getAddress());
+            SupplierDTO supplierDTO = SupplierModel.search(txtId.getText());
+            if (supplierDTO != null) {
+                txtName.setText(supplierDTO.getName());
+                txtContact.setText(supplierDTO.getContact());
+                txtAddress.setText(supplierDTO.getAddress());
             }
 
         } catch (Exception e) {
@@ -124,14 +124,14 @@ public class ManagesuppliersFormController implements Initializable {
     @FXML
     private void updateOnAction(ActionEvent event) {
         try {
-            Supplier supplier = new Supplier(
+            SupplierDTO supplierDTO = new SupplierDTO(
                     txtId.getText(),
                     txtName.getText(),
                     txtContact.getText(),
                     txtAddress.getText()
             );
 
-            if (SupplierModel.update(supplier) > 0) {
+            if (SupplierModel.update(supplierDTO) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Updated Successfully...!").show();
             }
         } catch (Exception e) {

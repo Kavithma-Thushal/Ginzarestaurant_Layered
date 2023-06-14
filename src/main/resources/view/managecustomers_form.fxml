@@ -37,7 +37,7 @@
             <Font name="Algerian" size="17.0" />
          </font>
       </TextField>
-      <TextField fx:id="txtContact" layoutX="526.0" layoutY="565.0" onKeyReleased="#txtKeyRelease" prefHeight="31.0" prefWidth="200.0" promptText="customer contact">
+      <TextField fx:id="txtContact" layoutX="526.0" layoutY="565.0" onKeyReleased="#txtKeyRelease" prefHeight="31.0" prefWidth="200.0" promptText="customerDTO contact">
          <font>
             <Font name="Algerian" size="17.0" />
          </font>
@@ -72,7 +72,7 @@
             <Font name="Algerian" size="17.0" />
          </font>
       </TextField>
-      <TextField fx:id="txtAddress" layoutX="755.0" layoutY="565.0" onKeyReleased="#txtKeyRelease" prefHeight="31.0" prefWidth="200.0" promptText="customer address">
+      <TextField fx:id="txtAddress" layoutX="755.0" layoutY="565.0" onKeyReleased="#txtKeyRelease" prefHeight="31.0" prefWidth="200.0" promptText="customerDTO address">
          <font>
             <Font name="Algerian" size="17.0" />
          </font>

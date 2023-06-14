@@ -14,10 +14,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.restaurant.db.DBConnection;
-import lk.ijse.restaurant.dto.CartDTO;
-import lk.ijse.restaurant.dto.Customer;
-import lk.ijse.restaurant.dto.Item;
-import lk.ijse.restaurant.view.CartTM;
+import lk.ijse.restaurant.dto.OrderDTO;
+import lk.ijse.restaurant.dto.CustomerDTO;
+import lk.ijse.restaurant.dto.ItemDTO;
+import lk.ijse.restaurant.view.OrderTM;
 import lk.ijse.restaurant.model.CustomerModel;
 import lk.ijse.restaurant.model.ItemModel;
 import lk.ijse.restaurant.model.OrderModel;
@@ -74,7 +74,7 @@ public class ManageordersFormController implements Initializable {
     @FXML
     private Label lbldateandtime;
 
-    private ObservableList<CartTM> observableList = FXCollections.observableArrayList();
+    private ObservableList<OrderTM> observableList = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -146,8 +146,8 @@ public class ManageordersFormController implements Initializable {
         cmbCustomerId.setDisable(true);
 
         try {
-            Customer customer = CustomerModel.searchById(id);
-            txtCustomerName.setText(customer.getName());
+            CustomerDTO customerDTO = CustomerModel.searchById(id);
+            txtCustomerName.setText(customerDTO.getName());
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "please try again...!").show();
         }
@@ -158,8 +158,8 @@ public class ManageordersFormController implements Initializable {
         String code = cmbItemCode.getValue();
 
         try {
-            Item item = ItemModel.searchById(code);
-            fillItemFields(item);
+            ItemDTO itemDTO = ItemModel.searchById(code);
+            fillItemFields(itemDTO);
 
             txtQty.requestFocus();
         } catch (Exception e) {
@@ -167,10 +167,10 @@ public class ManageordersFormController implements Initializable {
         }
     }
 
-    private void fillItemFields(Item item) {
-        txtDescription.setText(item.getDescription());
-        txtUnitPrice.setText(String.valueOf(item.getUnitprice()));
-        txtQtyOnHand.setText(String.valueOf(item.getQtyonhand()));
+    private void fillItemFields(ItemDTO itemDTO) {
+        txtDescription.setText(itemDTO.getDescription());
+        txtUnitPrice.setText(String.valueOf(itemDTO.getUnitprice()));
+        txtQtyOnHand.setText(String.valueOf(itemDTO.getQtyonhand()));
     }
 
     @FXML
@@ -203,7 +203,7 @@ public class ManageordersFormController implements Initializable {
                 }
             }
 
-            CartTM tm = new CartTM(code, description, qty, unitPrice, total, btnRemove);
+            OrderTM tm = new OrderTM(code, description, qty, unitPrice, total, btnRemove);
 
             observableList.add(tm);
             tblOrderCart.setItems(observableList);
@@ -264,22 +264,22 @@ public class ManageordersFormController implements Initializable {
         String oId = txtOrderId.getText();
         String cusId = cmbCustomerId.getValue();
 
-        List<CartDTO> cartDTOList = new ArrayList<>();
+        List<OrderDTO> orderDTOList = new ArrayList<>();
 
         for (int i = 0; i < tblOrderCart.getItems().size(); i++) {
-            CartTM cartTM = observableList.get(i);
+            OrderTM orderTM = observableList.get(i);
 
-            CartDTO dto = new CartDTO(
-                    cartTM.getCode(),
-                    cartTM.getQty(),
-                    cartTM.getUnitPrice()
+            OrderDTO dto = new OrderDTO(
+                    orderTM.getCode(),
+                    orderTM.getQty(),
+                    orderTM.getUnitPrice()
             );
-            cartDTOList.add(dto);
+            orderDTOList.add(dto);
         }
 
         boolean isPlaced = false;
         try {
-            isPlaced = PlaceOrderModel.placeOrder(oId, cusId, cartDTOList);
+            isPlaced = PlaceOrderModel.placeOrder(oId, cusId, orderDTOList);
             if (isPlaced) {
                 Alert ginzaAlert=new Alert(Alert.AlertType.INFORMATION, "Order Placed...!");
                 ginzaAlert.show();

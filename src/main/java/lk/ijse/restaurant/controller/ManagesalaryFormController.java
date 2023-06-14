@@ -12,7 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.restaurant.dto.Salary;
+import lk.ijse.restaurant.dto.SalaryDTO;
 import lk.ijse.restaurant.view.SalaryTM;
 import lk.ijse.restaurant.model.SalaryModel;
 
@@ -68,14 +68,14 @@ public class ManagesalaryFormController implements Initializable {
     private void getAll() {
         try {
             ObservableList<SalaryTM> observableList = FXCollections.observableArrayList();
-            List<Salary> salaryList = SalaryModel.getAll();
+            List<SalaryDTO> salaryDTOList = SalaryModel.getAll();
 
-            for (Salary salary : salaryList) {
+            for (SalaryDTO salaryDTO : salaryDTOList) {
                 observableList.add(new SalaryTM(
-                        salary.getCode(),
-                        salary.getEmployeeid(),
-                        salary.getAmount(),
-                        salary.getDatetime()
+                        salaryDTO.getCode(),
+                        salaryDTO.getEmployeeid(),
+                        salaryDTO.getAmount(),
+                        salaryDTO.getDatetime()
                 ));
             }
             tblSalary.setItems(observableList);
@@ -87,14 +87,14 @@ public class ManagesalaryFormController implements Initializable {
     @FXML
     private void saveOnAction(ActionEvent event) {
         try {
-            Salary salary = new Salary(
+            SalaryDTO salaryDTO = new SalaryDTO(
                     txtCode.getText(),
                     txtEmployeeid.getText(),
                     Double.parseDouble(txtAmount.getText()),
                     txtDatetime.getText()
             );
 
-            if (SalaryModel.save(salary) > 0) {
+            if (SalaryModel.save(salaryDTO) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Saved Successfully...!").show();
                 tblSalary.refresh();
                 getAll();
@@ -107,11 +107,11 @@ public class ManagesalaryFormController implements Initializable {
     @FXML
     private void searchOnAction(ActionEvent event) {
         try {
-            Salary salary = SalaryModel.search(txtCode.getText());
-            if (salary != null) {
-                txtEmployeeid.setText(salary.getEmployeeid());
-                txtAmount.setText(String.valueOf(salary.getAmount()));
-                txtDatetime.setText(String.valueOf(salary.getDatetime()));
+            SalaryDTO salaryDTO = SalaryModel.search(txtCode.getText());
+            if (salaryDTO != null) {
+                txtEmployeeid.setText(salaryDTO.getEmployeeid());
+                txtAmount.setText(String.valueOf(salaryDTO.getAmount()));
+                txtDatetime.setText(String.valueOf(salaryDTO.getDatetime()));
             }
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Please try again...!").show();
@@ -121,14 +121,14 @@ public class ManagesalaryFormController implements Initializable {
     @FXML
     private void updateOnAction(ActionEvent event) {
         try {
-            Salary salary = new Salary(
+            SalaryDTO salaryDTO = new SalaryDTO(
                     txtCode.getText(),
                     txtEmployeeid.getText(),
                     Double.parseDouble(txtAmount.getText()),
                     txtDatetime.getText()
             );
 
-            if (SalaryModel.update(salary) > 0) {
+            if (SalaryModel.update(salaryDTO) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Updated Successfully...!").show();
             }
         } catch (Exception e) {

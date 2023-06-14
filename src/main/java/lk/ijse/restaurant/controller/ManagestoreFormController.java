@@ -14,7 +14,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.restaurant.dto.Item;
+import lk.ijse.restaurant.dto.ItemDTO;
 import lk.ijse.restaurant.view.ItemTM;
 import lk.ijse.restaurant.model.ItemModel;
 import lk.ijse.restaurant.util.Validation;
@@ -123,14 +123,14 @@ public class ManagestoreFormController implements Initializable {
     private void getAll() {
         try {
             ObservableList<ItemTM> observableList = FXCollections.observableArrayList();
-            List<Item> itemList = ItemModel.getAll();
+            List<ItemDTO> itemDTOList = ItemModel.getAll();
 
-            for (Item item : itemList) {
+            for (ItemDTO itemDTO : itemDTOList) {
                 observableList.add(new ItemTM(
-                        item.getCode(),
-                        item.getDescription(),
-                        item.getUnitprice(),
-                        item.getQtyonhand()
+                        itemDTO.getCode(),
+                        itemDTO.getDescription(),
+                        itemDTO.getUnitprice(),
+                        itemDTO.getQtyonhand()
                 ));
             }
             tblItem.setItems(observableList);
@@ -142,14 +142,14 @@ public class ManagestoreFormController implements Initializable {
     @FXML
     private void saveOnAction(ActionEvent event) {
         try {
-            Item item = new Item(
+            ItemDTO itemDTO = new ItemDTO(
                     txtCode.getText(),
                     txtDescription.getText(),
                     Double.parseDouble(txtUnitprice.getText()),
                     Integer.parseInt(txtQtyonhand.getText())
             );
 
-            if (ItemModel.save(item) > 0) {
+            if (ItemModel.save(itemDTO) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Saved Successfully...!").show();
                 tblItem.refresh();
                 getAll();
@@ -163,11 +163,11 @@ public class ManagestoreFormController implements Initializable {
     @FXML
     private void searchOnAction(ActionEvent event) {
         try {
-            Item item = ItemModel.search(txtCode.getText());
-            if (item != null) {
-                txtDescription.setText(item.getDescription());
-                txtUnitprice.setText(String.valueOf(item.getUnitprice()));
-                txtQtyonhand.setText(String.valueOf(item.getQtyonhand()));
+            ItemDTO itemDTO = ItemModel.search(txtCode.getText());
+            if (itemDTO != null) {
+                txtDescription.setText(itemDTO.getDescription());
+                txtUnitprice.setText(String.valueOf(itemDTO.getUnitprice()));
+                txtQtyonhand.setText(String.valueOf(itemDTO.getQtyonhand()));
             }
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Please try again...!").show();
@@ -177,14 +177,14 @@ public class ManagestoreFormController implements Initializable {
     @FXML
     private void updateOnAction(ActionEvent event) {
         try {
-            Item item = new Item(
+            ItemDTO itemDTO = new ItemDTO(
                     txtCode.getText(),
                     txtDescription.getText(),
                     Double.parseDouble(txtUnitprice.getText()),
                     Integer.parseInt(txtQtyonhand.getText())
             );
 
-            if (ItemModel.update(item) > 0) {
+            if (ItemModel.update(itemDTO) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Updated Successfully...!").show();
             }
         } catch (Exception e) {

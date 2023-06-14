@@ -1,6 +1,6 @@
 package lk.ijse.restaurant.model;
 
-import lk.ijse.restaurant.dto.Salary;
+import lk.ijse.restaurant.dto.SalaryDTO;
 import lk.ijse.restaurant.util.CrudUtil;
 
 import java.sql.ResultSet;
@@ -10,24 +10,24 @@ import java.util.List;
 
 public class SalaryModel {
 
-    public static int save(Salary salary) throws SQLException {
+    public static int save(SalaryDTO salaryDTO) throws SQLException {
         String sql = "INSERT INTO salary VALUES (?,?,?,?)";
         return CrudUtil.execute(
                 sql,
-                salary.getCode(),
-                salary.getEmployeeid(),
-                salary.getAmount(),
-                salary.getDatetime()
+                salaryDTO.getCode(),
+                salaryDTO.getEmployeeid(),
+                salaryDTO.getAmount(),
+                salaryDTO.getDatetime()
         );
     }
 
-    public static Salary search(String code) throws SQLException {
+    public static SalaryDTO search(String code) throws SQLException {
 
         String sql = "SELECT * FROM salary WHERE code=?";
         ResultSet resultSet = CrudUtil.execute(sql, code);
 
         if (resultSet.next()) {
-            return new Salary(
+            return new SalaryDTO(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getDouble(3),
@@ -37,15 +37,15 @@ public class SalaryModel {
         return null;
     }
 
-    public static int update(Salary salary) throws SQLException {
+    public static int update(SalaryDTO salaryDTO) throws SQLException {
 
         String sql = "UPDATE salary SET employeeid=? , amount=? , datetime=? WHERE code=?";
         return CrudUtil.execute(
                 sql,
-                salary.getEmployeeid(),
-                salary.getAmount(),
-                salary.getDatetime(),
-                salary.getCode()
+                salaryDTO.getEmployeeid(),
+                salaryDTO.getAmount(),
+                salaryDTO.getDatetime(),
+                salaryDTO.getCode()
         );
     }
 
@@ -54,21 +54,21 @@ public class SalaryModel {
         return CrudUtil.execute(sql, code);
     }
 
-    public static List<Salary> getAll() throws SQLException {
+    public static List<SalaryDTO> getAll() throws SQLException {
 
-        List<Salary> salaryList = new ArrayList<>();
+        List<SalaryDTO> salaryDTOList = new ArrayList<>();
         String sql = "SELECT * FROM salary";
         ResultSet resultSet = CrudUtil.execute(sql);
 
         while (resultSet.next()) {
-            Salary salary= new Salary(
+            SalaryDTO salaryDTO = new SalaryDTO(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getDouble(3),
                     resultSet.getString(4)
             );
-            salaryList.add(salary);
+            salaryDTOList.add(salaryDTO);
         }
-        return salaryList;
+        return salaryDTOList;
     }
 }

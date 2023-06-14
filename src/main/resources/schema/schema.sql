@@ -41,7 +41,7 @@ CREATE TABLE items
     CONSTRAINT PRIMARY KEY (code)
 );
 
-CREATE TABLE salary
+CREATE TABLE salaryDTO
 (
     code       VARCHAR(20),
     employeeid VARCHAR(20),
@@ -61,7 +61,7 @@ CREATE TABLE orders
     CONSTRAINT FOREIGN KEY (customerid) REFERENCES customers (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE delivery
+CREATE TABLE deliveryDTO
 (
     code       VARCHAR(20),
     employeeid VARCHAR(20),

@@ -12,7 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.restaurant.dto.Employee;
+import lk.ijse.restaurant.dto.EmployeeDTO;
 import lk.ijse.restaurant.view.EmployeeTM;
 import lk.ijse.restaurant.model.EmployeeModel;
 
@@ -78,16 +78,16 @@ public class ManageemployeesFormController implements Initializable {
     private void getAll() {
         try {
             ObservableList<EmployeeTM> observableList = FXCollections.observableArrayList();
-            List<Employee> employeeList = EmployeeModel.getAll();
+            List<EmployeeDTO> employeeDTOList = EmployeeModel.getAll();
 
-            for (Employee employee : employeeList) {
+            for (EmployeeDTO employeeDTO : employeeDTOList) {
                 observableList.add(new EmployeeTM(
-                        employee.getId(),
-                        employee.getName(),
-                        employee.getContact(),
-                        employee.getJobrole(),
-                        employee.getUsername(),
-                        employee.getPassword()
+                        employeeDTO.getId(),
+                        employeeDTO.getName(),
+                        employeeDTO.getContact(),
+                        employeeDTO.getJobrole(),
+                        employeeDTO.getUsername(),
+                        employeeDTO.getPassword()
                 ));
             }
             tblemployee.setItems(observableList);
@@ -100,7 +100,7 @@ public class ManageemployeesFormController implements Initializable {
     private void saveOnAction(ActionEvent event) {
 
         try {
-            Employee employee = new Employee(
+            EmployeeDTO employeeDTO = new EmployeeDTO(
                     txtId.getText(),
                     txtName.getText(),
                     txtContact.getText(),
@@ -109,7 +109,7 @@ public class ManageemployeesFormController implements Initializable {
                     txtPassword.getText()
             );
 
-            if (EmployeeModel.save(employee) > 0) {
+            if (EmployeeModel.save(employeeDTO) > 0) {
 
                 new Alert(Alert.AlertType.CONFIRMATION, "Saved Successfully...!").show();
                 tblemployee.refresh();
@@ -124,13 +124,13 @@ public class ManageemployeesFormController implements Initializable {
     @FXML
     private void searchOnAction(ActionEvent event) {
         try {
-            Employee employee = EmployeeModel.search(txtId.getText());
-            if (employee != null) {
-                txtName.setText(employee.getName());
-                txtContact.setText(employee.getContact());
-                txtJobrole.setText(employee.getJobrole());
-                txtUsername.setText(employee.getUsername());
-                txtPassword.setText(employee.getPassword());
+            EmployeeDTO employeeDTO = EmployeeModel.search(txtId.getText());
+            if (employeeDTO != null) {
+                txtName.setText(employeeDTO.getName());
+                txtContact.setText(employeeDTO.getContact());
+                txtJobrole.setText(employeeDTO.getJobrole());
+                txtUsername.setText(employeeDTO.getUsername());
+                txtPassword.setText(employeeDTO.getPassword());
             }
 
         } catch (Exception e) {
@@ -141,7 +141,7 @@ public class ManageemployeesFormController implements Initializable {
     @FXML
     private void updateOnAction(ActionEvent event) {
         try {
-            Employee employee = new Employee(
+            EmployeeDTO employeeDTO = new EmployeeDTO(
                     txtId.getText(),
                     txtName.getText(),
                     txtContact.getText(),
@@ -150,7 +150,7 @@ public class ManageemployeesFormController implements Initializable {
                     txtPassword.getText()
             );
 
-            if (EmployeeModel.update(employee) > 0) {
+            if (EmployeeModel.update(employeeDTO) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Updated Successfully...!").show();
             }
         } catch (Exception e) {

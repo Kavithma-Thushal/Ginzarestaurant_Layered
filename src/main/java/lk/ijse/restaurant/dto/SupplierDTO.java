@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class Supplier {
+public class SupplierDTO {
     private String id;
     private String name;
     private String contact;

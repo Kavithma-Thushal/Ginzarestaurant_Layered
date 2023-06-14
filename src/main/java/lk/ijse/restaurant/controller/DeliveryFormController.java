@@ -12,7 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.restaurant.dto.Delivery;
+import lk.ijse.restaurant.dto.DeliveryDTO;
 import lk.ijse.restaurant.view.DeliveryTM;
 import lk.ijse.restaurant.model.DeliveryModel;
 
@@ -78,16 +78,16 @@ public class DeliveryFormController implements Initializable {
     private void getAll() {
         try {
             ObservableList<DeliveryTM> observableList = FXCollections.observableArrayList();
-            List<Delivery> deliveryList = DeliveryModel.getAll();
+            List<DeliveryDTO> deliveryDTOList = DeliveryModel.getAll();
 
-            for (Delivery delivery : deliveryList) {
+            for (DeliveryDTO deliveryDTO : deliveryDTOList) {
                 observableList.add(new DeliveryTM(
-                        delivery.getCode(),
-                        delivery.getEmployeeid(),
-                        delivery.getCustomerid(),
-                        delivery.getOrderid(),
-                        delivery.getDetails(),
-                        delivery.getLocation()
+                        deliveryDTO.getCode(),
+                        deliveryDTO.getEmployeeid(),
+                        deliveryDTO.getCustomerid(),
+                        deliveryDTO.getOrderid(),
+                        deliveryDTO.getDetails(),
+                        deliveryDTO.getLocation()
                 ));
             }
             tblDelivery.setItems(observableList);
@@ -99,7 +99,7 @@ public class DeliveryFormController implements Initializable {
     @FXML
     private void saveOnAction(ActionEvent event) {
         try {
-            Delivery delivery = new Delivery(
+            DeliveryDTO deliveryDTO = new DeliveryDTO(
                     txtCode.getText(),
                     txtEmployeeid.getText(),
                     txtCustomerid.getText(),
@@ -108,7 +108,7 @@ public class DeliveryFormController implements Initializable {
                     txtLocation.getText()
             );
 
-            if (DeliveryModel.save(delivery) > 0) {
+            if (DeliveryModel.save(deliveryDTO) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Saved Successfully...!").show();
             }
         } catch (Exception e) {
@@ -119,13 +119,13 @@ public class DeliveryFormController implements Initializable {
     @FXML
     private void searchOnAction(ActionEvent event) {
         try {
-            Delivery delivery = DeliveryModel.search(txtCode.getText());
-            if (delivery != null) {
-                txtEmployeeid.setText(delivery.getEmployeeid());
-                txtCustomerid.setText(delivery.getCustomerid());
-                txtOrderid.setText(delivery.getOrderid());
-                txtDetails.setText(delivery.getDetails());
-                txtLocation.setText(delivery.getLocation());
+            DeliveryDTO deliveryDTO = DeliveryModel.search(txtCode.getText());
+            if (deliveryDTO != null) {
+                txtEmployeeid.setText(deliveryDTO.getEmployeeid());
+                txtCustomerid.setText(deliveryDTO.getCustomerid());
+                txtOrderid.setText(deliveryDTO.getOrderid());
+                txtDetails.setText(deliveryDTO.getDetails());
+                txtLocation.setText(deliveryDTO.getLocation());
             }
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Please try again...!").show();
@@ -135,7 +135,7 @@ public class DeliveryFormController implements Initializable {
     @FXML
     private void updateOnAction(ActionEvent event) {
         try {
-            Delivery delivery = new Delivery(
+            DeliveryDTO deliveryDTO = new DeliveryDTO(
                     txtCode.getText(),
                     txtEmployeeid.getText(),
                     txtCustomerid.getText(),
@@ -144,7 +144,7 @@ public class DeliveryFormController implements Initializable {
                     txtLocation.getText()
             );
 
-            if (DeliveryModel.update(delivery) > 0) {
+            if (DeliveryModel.update(deliveryDTO) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Updated Successfully...!").show();
             }
         } catch (Exception e) {

@@ -1,7 +1,7 @@
 package lk.ijse.restaurant.model;
 
 import lk.ijse.restaurant.db.DBConnection;
-import lk.ijse.restaurant.dto.CartDTO;
+import lk.ijse.restaurant.dto.OrderDTO;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class PlaceOrderModel {
 
-    public static boolean placeOrder(String oId, String cusId, List<CartDTO> cartDTOList) throws SQLException {
+    public static boolean placeOrder(String oId, String cusId, List<OrderDTO> orderDTOList) throws SQLException {
         Connection connection = null;
         try {
             connection = DBConnection.getInstance().getConnection();
@@ -18,9 +18,9 @@ public class PlaceOrderModel {
 
             boolean isSaved = OrderModel.save(oId, cusId);
             if (isSaved) {
-                boolean isUpdated = ItemModel.updateQty(cartDTOList);
+                boolean isUpdated = ItemModel.updateQty(orderDTOList);
                 if (isUpdated) {
-                    boolean isOrdered = OrderDetailModel.save(oId, cartDTOList,LocalDate.now());
+                    boolean isOrdered = OrderDetailModel.save(oId, orderDTOList,LocalDate.now());
                     if (isOrdered) {
                         connection.commit();
                         return true;

@@ -1,6 +1,6 @@
 package lk.ijse.restaurant.model;
 
-import lk.ijse.restaurant.dto.CartDTO;
+import lk.ijse.restaurant.dto.OrderDTO;
 import lk.ijse.restaurant.util.CrudUtil;
 
 import java.sql.Date;
@@ -10,8 +10,8 @@ import java.util.List;
 
 public class OrderDetailModel {
 
-    public static boolean save(String oId, List<CartDTO> cartDTOList, LocalDate date) throws SQLException {
-        for (CartDTO dto : cartDTOList) {
+    public static boolean save(String oId, List<OrderDTO> orderDTOList, LocalDate date) throws SQLException {
+        for (OrderDTO dto : orderDTOList) {
             if (!save(oId, dto,LocalDate.now())) {
                 return false;
             }
@@ -19,7 +19,7 @@ public class OrderDetailModel {
         return true;
     }
 
-    private static boolean save(String oId, CartDTO dto,LocalDate date) throws SQLException {
+    private static boolean save(String oId, OrderDTO dto, LocalDate date) throws SQLException {
         String sql = "INSERT INTO order_details VALUES(?, ?, ?, ?)";
         Integer affectedRows = CrudUtil.execute(sql, oId, dto.getCode(), dto.getQty(), Date.valueOf(date));
         return affectedRows > 0;

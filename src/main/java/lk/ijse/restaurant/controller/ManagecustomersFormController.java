@@ -14,7 +14,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.restaurant.dto.Customer;
+import lk.ijse.restaurant.dto.CustomerDTO;
 import lk.ijse.restaurant.view.CustomerTM;
 import lk.ijse.restaurant.model.CustomerModel;
 import lk.ijse.restaurant.util.Validation;
@@ -130,16 +130,16 @@ public class ManagecustomersFormController implements Initializable {
     private void getAll() {
         try {
             ObservableList<CustomerTM> observableList = FXCollections.observableArrayList();
-            List<Customer> customerList = CustomerModel.getAll();
+            List<CustomerDTO> customerDTOList = CustomerModel.getAll();
 
-            for (Customer customer : customerList) {
+            for (CustomerDTO customerDTO : customerDTOList) {
                 observableList.add(new CustomerTM(
-                        customer.getId(),
-                        customer.getName(),
-                        customer.getNic(),
-                        customer.getEmail(),
-                        customer.getContact(),
-                        customer.getAddress()
+                        customerDTO.getId(),
+                        customerDTO.getName(),
+                        customerDTO.getNic(),
+                        customerDTO.getEmail(),
+                        customerDTO.getContact(),
+                        customerDTO.getAddress()
                 ));
             }
             tblCustomer.setItems(observableList);
@@ -164,7 +164,7 @@ public class ManagecustomersFormController implements Initializable {
     private void saveOnAction(ActionEvent event) {
 
         try {
-            Customer customer = new Customer(
+            CustomerDTO customerDTO = new CustomerDTO(
                     txtId.getText(),
                     txtName.getText(),
                     txtNic.getText(),
@@ -173,7 +173,7 @@ public class ManagecustomersFormController implements Initializable {
                     txtAddress.getText()
             );
 
-            if (CustomerModel.save(customer) > 0) {
+            if (CustomerModel.save(customerDTO) > 0) {
                 //setCellValueFactory();
 
                 /*ObservableList<CustomerTM> observableList = FXCollections.observableArrayList();
@@ -203,13 +203,13 @@ public class ManagecustomersFormController implements Initializable {
     private void searchOnAction(ActionEvent event) {
 
         try {
-            Customer customer = CustomerModel.search(txtId.getText());
-            if (customer != null) {
-                txtName.setText(customer.getName());
-                txtNic.setText(customer.getNic());
-                txtEmail.setText(customer.getEmail());
-                txtContact.setText(customer.getContact());
-                txtAddress.setText(customer.getAddress());
+            CustomerDTO customerDTO = CustomerModel.search(txtId.getText());
+            if (customerDTO != null) {
+                txtName.setText(customerDTO.getName());
+                txtNic.setText(customerDTO.getNic());
+                txtEmail.setText(customerDTO.getEmail());
+                txtContact.setText(customerDTO.getContact());
+                txtAddress.setText(customerDTO.getAddress());
             }
 
         } catch (Exception e) {
@@ -221,7 +221,7 @@ public class ManagecustomersFormController implements Initializable {
     private void updateOnAction(ActionEvent event) {
 
         try {
-            Customer customer = new Customer(
+            CustomerDTO customerDTO = new CustomerDTO(
                     txtId.getText(),
                     txtName.getText(),
                     txtNic.getText(),
@@ -230,7 +230,7 @@ public class ManagecustomersFormController implements Initializable {
                     txtAddress.getText()
             );
 
-            if (CustomerModel.update(customer) > 0) {
+            if (CustomerModel.update(customerDTO) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Updated Successfully...!").show();
             }
         } catch (Exception e) {

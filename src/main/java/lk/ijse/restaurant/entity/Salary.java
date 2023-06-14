@@ -1,13 +1,15 @@
-package lk.ijse.restaurant.dto;
+package lk.ijse.restaurant.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
 public class Salary {
     private String code;
-    private String employeeid;
+    private String employeeId;
     private Double amount;
-    private String datetime;
+    private LocalDate date;
 }

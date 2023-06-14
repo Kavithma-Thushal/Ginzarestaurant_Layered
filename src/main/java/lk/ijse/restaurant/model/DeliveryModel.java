@@ -1,6 +1,6 @@
 package lk.ijse.restaurant.model;
 
-import lk.ijse.restaurant.dto.Delivery;
+import lk.ijse.restaurant.dto.DeliveryDTO;
 import lk.ijse.restaurant.util.CrudUtil;
 
 import java.sql.ResultSet;
@@ -10,26 +10,26 @@ import java.util.List;
 
 public class DeliveryModel {
 
-    public static int save(Delivery delivery) throws SQLException {
+    public static int save(DeliveryDTO deliveryDTO) throws SQLException {
         String sql = "INSERT INTO delivery VALUES (?,?,?,?,?,?)";
         return CrudUtil.execute(
                 sql,
-                delivery.getCode(),
-                delivery.getEmployeeid(),
-                delivery.getCustomerid(),
-                delivery.getOrderid(),
-                delivery.getDetails(),
-                delivery.getLocation()
+                deliveryDTO.getCode(),
+                deliveryDTO.getEmployeeid(),
+                deliveryDTO.getCustomerid(),
+                deliveryDTO.getOrderid(),
+                deliveryDTO.getDetails(),
+                deliveryDTO.getLocation()
         );
     }
 
-    public static Delivery search(String code) throws SQLException {
+    public static DeliveryDTO search(String code) throws SQLException {
 
         String sql = "SELECT * FROM delivery WHERE code=?";
         ResultSet resultSet = CrudUtil.execute(sql, code);
 
         if (resultSet.next()) {
-            return new Delivery(
+            return new DeliveryDTO(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
@@ -41,17 +41,17 @@ public class DeliveryModel {
         return null;
     }
 
-    public static int update(Delivery delivery) throws SQLException {
+    public static int update(DeliveryDTO deliveryDTO) throws SQLException {
 
         String sql = "UPDATE delivery SET employeeid=? , customerid=? , orderid=? , details=? , location=?  WHERE code=?";
         return CrudUtil.execute(
                 sql,
-                delivery.getEmployeeid(),
-                delivery.getCustomerid(),
-                delivery.getOrderid(),
-                delivery.getDetails(),
-                delivery.getLocation(),
-                delivery.getCode()
+                deliveryDTO.getEmployeeid(),
+                deliveryDTO.getCustomerid(),
+                deliveryDTO.getOrderid(),
+                deliveryDTO.getDetails(),
+                deliveryDTO.getLocation(),
+                deliveryDTO.getCode()
         );
     }
 
@@ -60,14 +60,14 @@ public class DeliveryModel {
         return CrudUtil.execute(sql, code);
     }
 
-    public static List<Delivery> getAll() throws SQLException {
+    public static List<DeliveryDTO> getAll() throws SQLException {
 
-        List<Delivery> deliveryList = new ArrayList<>();
+        List<DeliveryDTO> deliveryDTOList = new ArrayList<>();
         String sql = "SELECT * FROM delivery";
         ResultSet resultSet = CrudUtil.execute(sql);
 
         while (resultSet.next()) {
-            Delivery delivery = new Delivery(
+            DeliveryDTO deliveryDTO = new DeliveryDTO(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
@@ -75,9 +75,9 @@ public class DeliveryModel {
                     resultSet.getString(5),
                     resultSet.getString(6)
             );
-            deliveryList.add(delivery);
+            deliveryDTOList.add(deliveryDTO);
         }
-        return deliveryList;
+        return deliveryDTOList;
     }
 
 }
