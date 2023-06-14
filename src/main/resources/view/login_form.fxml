@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" prefHeight="393.0" prefWidth="688.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.restaurant.controller.LoginFormController">
+    <children>
+        <ImageView fitHeight="410.0" fitWidth="720.0" layoutX="-1.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../img/3.jpg" />
+            </image>
+        </ImageView>
+        <Button layoutX="101.0" layoutY="260.0" mnemonicParsing="false" onAction="#cashierOnAction" prefHeight="44.0" prefWidth="516.0" text="Cashier">
+            <font>
+                <Font name="Algerian" size="23.0" />
+            </font>
+        </Button>
+        <Button layoutX="102.0" layoutY="334.0" mnemonicParsing="false" onAction="#adminOnAction" prefHeight="44.0" prefWidth="516.0" text="Admin">
+            <font>
+                <Font name="Algerian" size="23.0" />
+            </font>
+        </Button>
+        <Label layoutX="101.0" layoutY="61.0" prefHeight="52.0" prefWidth="516.0" style="-fx-background-color: lightblue; -fx-background-radius: 10;" text="  Welcome to GINZA Restaurant" textFill="#151515">
+            <font>
+                <Font name="Algerian" size="31.0" />
+            </font>
+        </Label>
+    </children>
+</AnchorPane>

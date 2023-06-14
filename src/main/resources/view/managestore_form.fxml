@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" prefHeight="615.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.restaurant.controller.ManagestoreFormController">
+   <children>
+      <ImageView fitHeight="640.0" fitWidth="1207.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/1.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="8.0" layoutY="60.0" prefHeight="34.0" prefWidth="255.0" style="-fx-background-color: lightblue; -fx-background-radius: 10;" text="STORE management">
+         <font>
+            <Font name="Algerian" size="25.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbldateandtime" layoutX="8.0" layoutY="134.0" prefHeight="34.0" prefWidth="255.0" style="-fx-background-color: lightblue; -fx-background-radius: 10;">
+         <font>
+            <Font name="Algerian" size="25.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtCode" layoutX="302.0" layoutY="510.0" prefHeight="31.0" prefWidth="200.0" promptText="Code">
+         <font>
+            <Font name="Algerian" size="17.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="txtUnitprice" layoutX="302.0" layoutY="568.0" onKeyReleased="#txtKeyRelease" prefHeight="31.0" prefWidth="200.0" promptText="Unit Price">
+         <font>
+            <Font name="Algerian" size="17.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="txtQtyonhand" layoutX="526.0" layoutY="565.0" onKeyReleased="#txtKeyRelease" prefHeight="31.0" prefWidth="200.0" promptText="Quantity On Hand">
+         <font>
+            <Font name="Algerian" size="17.0" />
+         </font>
+      </TextField>
+      <Button fx:id="btnSave" layoutX="979.0" layoutY="507.0" mnemonicParsing="false" onAction="#saveOnAction" prefHeight="34.0" prefWidth="90.0" style="-fx-background-color: lightblue;" text="Save">
+         <font>
+            <Font name="Algerian" size="17.0" />
+         </font>
+      </Button>
+      <Button layoutX="1089.0" layoutY="507.0" mnemonicParsing="false" onAction="#searchOnAction" prefHeight="34.0" prefWidth="90.0" style="-fx-background-color: lightblue;" text="Search">
+         <font>
+            <Font name="Algerian" size="17.0" />
+         </font>
+      </Button>
+      <Button layoutX="979.0" layoutY="564.0" mnemonicParsing="false" onAction="#updateOnAction" prefHeight="34.0" prefWidth="90.0" style="-fx-background-color: lightblue;" text="Update">
+         <font>
+            <Font name="Algerian" size="17.0" />
+         </font>
+      </Button>
+      <Button layoutX="1089.0" layoutY="564.0" mnemonicParsing="false" onAction="#deleteOnAction" prefHeight="34.0" prefWidth="90.0" style="-fx-background-color: lightblue;" text="Delete">
+         <font>
+            <Font name="Algerian" size="17.0" />
+         </font>
+      </Button>
+      <TextField fx:id="txtDescription" layoutX="526.0" layoutY="510.0" onKeyReleased="#txtKeyRelease" prefHeight="31.0" prefWidth="200.0" promptText="Description">
+         <font>
+            <Font name="Algerian" size="17.0" />
+         </font>
+      </TextField>
+      <TableView fx:id="tblItem" layoutX="300.0" layoutY="29.0" prefHeight="443.0" prefWidth="878.0" style="-fx-background-color: LIGHTGREY;">
+         <columns>
+            <TableColumn fx:id="colCode" prefWidth="219.0" text="Code" />
+            <TableColumn fx:id="colDescription" prefWidth="219.0" text="Description" />
+            <TableColumn fx:id="colUnitprice" prefWidth="219.0" text="Unit Price" />
+            <TableColumn fx:id="colQtyonhand" prefWidth="220.0" text="Quantity On Hand" />
+         </columns>
+      </TableView>
+      <Button layoutX="45.0" layoutY="560.0" mnemonicParsing="false" onAction="#backOnAction" prefHeight="34.0" prefWidth="78.0" style="-fx-background-color: grey;" text="Back">
+         <font>
+            <Font name="Bernard MT Condensed" size="17.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
