@@ -17,7 +17,7 @@ import lk.ijse.restaurant.db.DBConnection;
 import lk.ijse.restaurant.dto.CartDTO;
 import lk.ijse.restaurant.dto.Customer;
 import lk.ijse.restaurant.dto.Item;
-import lk.ijse.restaurant.dto.tm.CartTM;
+import lk.ijse.restaurant.view.CartTM;
 import lk.ijse.restaurant.model.CustomerModel;
 import lk.ijse.restaurant.model.ItemModel;
 import lk.ijse.restaurant.model.OrderModel;

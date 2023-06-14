@@ -15,7 +15,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.restaurant.dto.Item;
-import lk.ijse.restaurant.dto.tm.ItemTM;
+import lk.ijse.restaurant.view.ItemTM;
 import lk.ijse.restaurant.model.ItemModel;
 import lk.ijse.restaurant.util.Validation;
 

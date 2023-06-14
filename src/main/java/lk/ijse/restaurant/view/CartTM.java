@@ -1,4 +1,4 @@
-package lk.ijse.restaurant.dto.tm;
+package lk.ijse.restaurant.view;
 
 import javafx.scene.control.Button;
 import lombok.AllArgsConstructor;

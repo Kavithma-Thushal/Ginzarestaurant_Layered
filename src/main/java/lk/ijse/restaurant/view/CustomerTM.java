@@ -1,4 +1,4 @@
-package lk.ijse.restaurant.dto.tm;
+package lk.ijse.restaurant.view;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -6,11 +6,11 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 
-public class EmployeeTM {
+public class CustomerTM {
     private String id;
     private String name;
+    private String nic;
+    private String email;
     private String contact;
-    private String jobrole;
-    private String username;
-    private String password;
+    private String address;
 }

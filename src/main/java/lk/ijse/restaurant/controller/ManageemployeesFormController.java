@@ -13,7 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.restaurant.dto.Employee;
-import lk.ijse.restaurant.dto.tm.EmployeeTM;
+import lk.ijse.restaurant.view.EmployeeTM;
 import lk.ijse.restaurant.model.EmployeeModel;
 
 import java.io.IOException;

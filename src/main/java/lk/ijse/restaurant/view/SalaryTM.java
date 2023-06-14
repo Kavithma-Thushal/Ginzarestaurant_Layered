@@ -1,4 +1,4 @@
-package lk.ijse.restaurant.dto.tm;
+package lk.ijse.restaurant.view;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
