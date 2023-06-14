@@ -12,9 +12,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.restaurant.bo.BoFactory;
+import lk.ijse.restaurant.bo.custom.EmployeeBO;
 import lk.ijse.restaurant.dto.EmployeeDTO;
 import lk.ijse.restaurant.view.EmployeeTM;
-import lk.ijse.restaurant.model.EmployeeModel;
 
 import java.io.IOException;
 import java.net.URL;
@@ -56,6 +57,8 @@ public class ManageemployeesFormController implements Initializable {
     @FXML
     private Label lbldateandtime;
 
+    private EmployeeBO employeeBO= BoFactory.getBoFactory().getBO(BoFactory.BOTypes.EMPLOYEE);
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd      hh:mm");
@@ -78,7 +81,7 @@ public class ManageemployeesFormController implements Initializable {
     private void getAll() {
         try {
             ObservableList<EmployeeTM> observableList = FXCollections.observableArrayList();
-            List<EmployeeDTO> employeeDTOList = EmployeeModel.getAll();
+            List<EmployeeDTO> employeeDTOList = employeeBO.loadAllEmployees();
 
             for (EmployeeDTO employeeDTO : employeeDTOList) {
                 observableList.add(new EmployeeTM(
@@ -109,7 +112,7 @@ public class ManageemployeesFormController implements Initializable {
                     txtPassword.getText()
             );
 
-            if (EmployeeModel.save(employeeDTO) > 0) {
+            if (employeeBO.saveEmployee(employeeDTO) > 0) {
 
                 new Alert(Alert.AlertType.CONFIRMATION, "Saved Successfully...!").show();
                 tblemployee.refresh();
@@ -124,7 +127,7 @@ public class ManageemployeesFormController implements Initializable {
     @FXML
     private void searchOnAction(ActionEvent event) {
         try {
-            EmployeeDTO employeeDTO = EmployeeModel.search(txtId.getText());
+            EmployeeDTO employeeDTO = employeeBO.searchEmployee(txtId.getText());
             if (employeeDTO != null) {
                 txtName.setText(employeeDTO.getName());
                 txtContact.setText(employeeDTO.getContact());
@@ -150,7 +153,7 @@ public class ManageemployeesFormController implements Initializable {
                     txtPassword.getText()
             );
 
-            if (EmployeeModel.update(employeeDTO) > 0) {
+            if (employeeBO.updateEmployee(employeeDTO) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Updated Successfully...!").show();
             }
         } catch (Exception e) {
@@ -161,7 +164,7 @@ public class ManageemployeesFormController implements Initializable {
     @FXML
     private void deleteOnAction(ActionEvent event) {
         try {
-            if (EmployeeModel.delete(txtId.getText()) > 0) {
+            if (employeeBO.deletEmployeee(txtId.getText()) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Deleted Successfully...!").show();
             }
         } catch (Exception e) {

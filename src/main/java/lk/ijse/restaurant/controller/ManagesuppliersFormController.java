@@ -12,9 +12,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.restaurant.bo.BoFactory;
+import lk.ijse.restaurant.bo.custom.SupplierBO;
 import lk.ijse.restaurant.dto.SupplierDTO;
 import lk.ijse.restaurant.view.SupplierTM;
-import lk.ijse.restaurant.model.SupplierModel;
 
 import java.io.IOException;
 import java.net.URL;
@@ -48,6 +49,8 @@ public class ManagesuppliersFormController implements Initializable {
     @FXML
     private Label lbldateandtime;
 
+    private SupplierBO supplierBO = BoFactory.getBoFactory().getBO(BoFactory.BOTypes.SUPPLIER);
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd      hh:mm");
@@ -68,7 +71,7 @@ public class ManagesuppliersFormController implements Initializable {
     private void getAll() {
         try {
             ObservableList<SupplierTM> observableList = FXCollections.observableArrayList();
-            List<SupplierDTO> supplierDTOList = SupplierModel.getAll();
+            List<SupplierDTO> supplierDTOList = supplierBO.loadAllSuppliers();
 
             for (SupplierDTO supplierDTO : supplierDTOList) {
                 observableList.add(new SupplierTM(
@@ -94,7 +97,7 @@ public class ManagesuppliersFormController implements Initializable {
                     txtAddress.getText()
             );
 
-            if (SupplierModel.save(supplierDTO) > 0) {
+            if (/*SupplierModel.save(supplierDTO)*/1 > 0) {
 
                 new Alert(Alert.AlertType.CONFIRMATION, "Saved Successfully...!").show();
                 tblsupplier.refresh();
@@ -109,7 +112,7 @@ public class ManagesuppliersFormController implements Initializable {
     @FXML
     private void searchOnAction(ActionEvent event) {
         try {
-            SupplierDTO supplierDTO = SupplierModel.search(txtId.getText());
+            SupplierDTO supplierDTO = /*SupplierModel.search(txtId.getText())*/null;
             if (supplierDTO != null) {
                 txtName.setText(supplierDTO.getName());
                 txtContact.setText(supplierDTO.getContact());
@@ -131,7 +134,7 @@ public class ManagesuppliersFormController implements Initializable {
                     txtAddress.getText()
             );
 
-            if (SupplierModel.update(supplierDTO) > 0) {
+            if (/*SupplierModel.update(supplierDTO)*/1 > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Updated Successfully...!").show();
             }
         } catch (Exception e) {
@@ -142,7 +145,7 @@ public class ManagesuppliersFormController implements Initializable {
     @FXML
     private void deleteOnAction(ActionEvent event) {
         try {
-            if (SupplierModel.delete(txtId.getText()) > 0) {
+            if (/*SupplierModel.delete(txtId.getText())*/1 > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Deleted Successfully...!").show();
             }
         } catch (Exception e) {

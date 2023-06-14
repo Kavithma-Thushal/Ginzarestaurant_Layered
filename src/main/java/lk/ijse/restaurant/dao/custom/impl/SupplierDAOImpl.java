@@ -14,7 +14,7 @@ public class SupplierDAOImpl implements SupplierDAO {
     @Override
     public List<Supplier> loadAll() throws SQLException {
         List<Supplier> supplierList = new ArrayList<>();
-        ResultSet rst = SQLUtil.execute("SELECT * FROM supplier");
+        ResultSet rst = SQLUtil.execute("SELECT * FROM suppliers");
         while (rst.next()) {
             Supplier supplier = new Supplier(rst.getString(1), rst.getString(2), rst.getString(3), rst.getString(4));
             supplierList.add(supplier);
@@ -24,7 +24,7 @@ public class SupplierDAOImpl implements SupplierDAO {
 
     @Override
     public int save(Supplier s) throws SQLException {
-        return SQLUtil.execute("INSERT INTO supplier VALUES(?,?,?,?)", s.getId(), s.getName(), s.getContact(), s.getAddress());
+        return SQLUtil.execute("INSERT INTO suppliers VALUES(?,?,?,?)", s.getId(), s.getName(), s.getContact(), s.getAddress());
     }
 
     @Override
@@ -44,7 +44,7 @@ public class SupplierDAOImpl implements SupplierDAO {
 
     @Override
     public String generateNextId() throws SQLException {
-        ResultSet rst = SQLUtil.execute("SELECT id FROM supplier ORDER BY id DESC LIMIT 1");
+        ResultSet rst = SQLUtil.execute("SELECT id FROM suppliers ORDER BY id DESC LIMIT 1");
         if (rst.next()) {
             return splitSupplierId(rst.getString(1));
         }

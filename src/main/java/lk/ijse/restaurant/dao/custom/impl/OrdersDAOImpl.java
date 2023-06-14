@@ -18,7 +18,7 @@ public class OrdersDAOImpl implements OrdersDAO {
 
     @Override
     public int save(Orders entity) throws SQLException {
-        return SQLUtil.execute("INSERT INTO Orders(orderId, customerId) VALUES(?, ?)", entity.getId(), entity.getCustomerId());
+        return SQLUtil.execute("INSERT INTO Orders(id, customerId) VALUES(?, ?)", entity.getId(), entity.getCustomerId());
     }
 
     @Override

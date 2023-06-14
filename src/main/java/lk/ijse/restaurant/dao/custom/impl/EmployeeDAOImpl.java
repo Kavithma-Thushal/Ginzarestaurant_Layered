@@ -14,7 +14,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     @Override
     public List<Employee> loadAll() throws SQLException {
         List<Employee> employeeList = new ArrayList<>();
-        ResultSet rst = SQLUtil.execute("SELECT * FROM employee");
+        ResultSet rst = SQLUtil.execute("SELECT * FROM employees");
         while (rst.next()) {
             Employee employee = new Employee(rst.getString(1), rst.getString(2), rst.getString(3), rst.getString(4), rst.getString(5), rst.getString(6));
             employeeList.add(employee);
@@ -24,12 +24,12 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
     @Override
     public int save(Employee e) throws SQLException {
-        return SQLUtil.execute("INSERT INTO employee VALUES (?,?,?,?,?,?)", e.getId(), e.getName(), e.getContact(), e.getJobRole(), e.getUsername(), e.getPassword());
+        return SQLUtil.execute("INSERT INTO employees VALUES (?,?,?,?,?,?)", e.getId(), e.getName(), e.getContact(), e.getJobRole(), e.getUsername(), e.getPassword());
     }
 
     @Override
     public Employee search(String id) throws SQLException {
-        ResultSet rst = SQLUtil.execute("SELECT * FROM employee WHERE id=?", id);
+        ResultSet rst = SQLUtil.execute("SELECT * FROM employees WHERE id=?", id);
         if (rst.next()) {
             return new Employee(rst.getString(1), rst.getString(2), rst.getString(3), rst.getString(4), rst.getString(5), rst.getString(6));
         }
@@ -38,17 +38,17 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
     @Override
     public int update(Employee e) throws SQLException {
-        return SQLUtil.execute("UPDATE employee SET name=? , contact=? , jobRole=? , username=? , password=? WHERE id=?", e.getName(), e.getContact(), e.getJobRole(), e.getUsername(), e.getPassword(), e.getId());
+        return SQLUtil.execute("UPDATE employees SET name=? , contact=? , jobRole=? , username=? , password=? WHERE id=?", e.getName(), e.getContact(), e.getJobRole(), e.getUsername(), e.getPassword(), e.getId());
     }
 
     @Override
     public int delete(String id) throws SQLException {
-        return SQLUtil.execute("DELETE FROM employee WHERE id=?", id);
+        return SQLUtil.execute("DELETE FROM employees WHERE id=?", id);
     }
 
     @Override
     public String generateNextId() throws SQLException {
-        ResultSet rst = SQLUtil.execute("SELECT id FROM employee ORDER BY id DESC LIMIT 1");
+        ResultSet rst = SQLUtil.execute("SELECT id FROM employees ORDER BY id DESC LIMIT 1");
         if (rst.next()) {
             return splitEmployeeId(rst.getString(1));
         }
@@ -68,7 +68,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     @Override
     public List<String> loadEmployeeIds() throws SQLException {
         List<String> arrayList = new ArrayList<>();
-        ResultSet rst = SQLUtil.execute("SELECT id FROM employee ORDER BY id ASC");
+        ResultSet rst = SQLUtil.execute("SELECT id FROM employees ORDER BY id ASC");
         while (rst.next()) {
             arrayList.add(rst.getString(1));
         }
@@ -78,7 +78,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     @Override
     public List<String> loadEmployeeIdsToRepair() throws SQLException {
         List<String> arrayList = new ArrayList<>();
-        ResultSet rst = SQLUtil.execute("SELECT id FROM employee WHERE   jobRole IN ('Technician','technician') ORDER BY id ASC");
+        ResultSet rst = SQLUtil.execute("SELECT id FROM employees WHERE   jobRole IN ('Technician','technician') ORDER BY id ASC");
         while (rst.next()) {
             arrayList.add(rst.getString(1));
         }

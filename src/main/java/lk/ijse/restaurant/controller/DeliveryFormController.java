@@ -12,9 +12,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.restaurant.bo.BoFactory;
+import lk.ijse.restaurant.bo.custom.DeliveryBO;
 import lk.ijse.restaurant.dto.DeliveryDTO;
 import lk.ijse.restaurant.view.DeliveryTM;
-import lk.ijse.restaurant.model.DeliveryModel;
 
 import java.io.IOException;
 import java.net.URL;
@@ -56,6 +57,8 @@ public class DeliveryFormController implements Initializable {
     @FXML
     private Label lbldateandtime;
 
+    private DeliveryBO deliveryBO = BoFactory.getBoFactory().getBO(BoFactory.BOTypes.DELIVERY);
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd      hh:mm");
@@ -78,7 +81,7 @@ public class DeliveryFormController implements Initializable {
     private void getAll() {
         try {
             ObservableList<DeliveryTM> observableList = FXCollections.observableArrayList();
-            List<DeliveryDTO> deliveryDTOList = DeliveryModel.getAll();
+            List<DeliveryDTO> deliveryDTOList = deliveryBO.loadAllDelivers();
 
             for (DeliveryDTO deliveryDTO : deliveryDTOList) {
                 observableList.add(new DeliveryTM(
@@ -108,7 +111,7 @@ public class DeliveryFormController implements Initializable {
                     txtLocation.getText()
             );
 
-            if (DeliveryModel.save(deliveryDTO) > 0) {
+            if (deliveryBO.saveDelivers(deliveryDTO) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Saved Successfully...!").show();
             }
         } catch (Exception e) {
@@ -119,7 +122,7 @@ public class DeliveryFormController implements Initializable {
     @FXML
     private void searchOnAction(ActionEvent event) {
         try {
-            DeliveryDTO deliveryDTO = DeliveryModel.search(txtCode.getText());
+            DeliveryDTO deliveryDTO = /*deliveryBO.search(txtCode.getText())*/null;
             if (deliveryDTO != null) {
                 txtEmployeeid.setText(deliveryDTO.getEmployeeid());
                 txtCustomerid.setText(deliveryDTO.getCustomerid());
@@ -144,7 +147,7 @@ public class DeliveryFormController implements Initializable {
                     txtLocation.getText()
             );
 
-            if (DeliveryModel.update(deliveryDTO) > 0) {
+            if (/*DeliveryModel.update(deliveryDTO)*/1 > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Updated Successfully...!").show();
             }
         } catch (Exception e) {
@@ -155,7 +158,7 @@ public class DeliveryFormController implements Initializable {
     @FXML
     private void deleteOnAction(ActionEvent event) {
         try {
-            if (DeliveryModel.delete(txtCode.getText()) > 0) {
+            if (/*DeliveryModel.delete(txtCode.getText())*/1 > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Deleted Successfully...!").show();
             }
         } catch (Exception e) {

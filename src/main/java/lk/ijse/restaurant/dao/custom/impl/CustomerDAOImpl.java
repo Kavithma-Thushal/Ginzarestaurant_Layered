@@ -14,7 +14,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     @Override
     public List<Customer> loadAll() throws SQLException {
         List<Customer> customerList = new ArrayList<>();
-        ResultSet rst = SQLUtil.execute("SELECT * FROM customer");
+        ResultSet rst = SQLUtil.execute("SELECT * FROM customers");
         while (rst.next()) {
             Customer customer = new Customer(rst.getString(1), rst.getString(2), rst.getString(3), rst.getString(4), rst.getString(5), rst.getString(6));
             customerList.add(customer);
@@ -24,12 +24,12 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public int save(Customer c) throws SQLException {
-        return SQLUtil.execute("INSERT INTO customer VALUES (?,?,?,?,?,?)", c.getId(), c.getName(), c.getNic(), c.getEmail(), c.getContact(), c.getAddress());
+        return SQLUtil.execute("INSERT INTO customers VALUES (?,?,?,?,?,?)", c.getId(), c.getName(), c.getNic(), c.getEmail(), c.getContact(), c.getAddress());
     }
 
     @Override
     public Customer search(String id) throws SQLException {
-        ResultSet rst = SQLUtil.execute("SELECT * FROM customer WHERE id=?", id);
+        ResultSet rst = SQLUtil.execute("SELECT * FROM customers WHERE id=?", id);
         if (rst.next()) {
             return new Customer(rst.getString(1), rst.getString(2), rst.getString(3), rst.getString(4), rst.getString(5), rst.getString(6));
         }
@@ -38,17 +38,17 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public int update(Customer c) throws SQLException {
-        return SQLUtil.execute("UPDATE customer SET name=? , nic=? , email=? , contact=? , address=? WHERE id=?", c.getName(), c.getNic(), c.getEmail(), c.getContact(), c.getAddress(), c.getId());
+        return SQLUtil.execute("UPDATE customers SET name=? , nic=? , email=? , contact=? , address=? WHERE id=?", c.getName(), c.getNic(), c.getEmail(), c.getContact(), c.getAddress(), c.getId());
     }
 
     @Override
     public int delete(String id) throws SQLException {
-        return SQLUtil.execute("DELETE FROM customer WHERE id=?", id);
+        return SQLUtil.execute("DELETE FROM customers WHERE id=?", id);
     }
 
     @Override
     public String generateNextId() throws SQLException {
-        ResultSet rst = SQLUtil.execute("SELECT id FROM customer ORDER BY id DESC LIMIT 1");
+        ResultSet rst = SQLUtil.execute("SELECT id FROM customers ORDER BY id DESC LIMIT 1");
         if (rst.next()) {
             return splitCustomerId(rst.getString(1));
         }
@@ -68,7 +68,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     @Override
     public List<String> loadCustomerIds() throws SQLException {
         List<String> arrayList = new ArrayList<>();
-        ResultSet rst = SQLUtil.execute("SELECT id FROM customer ORDER BY id ASC");
+        ResultSet rst = SQLUtil.execute("SELECT id FROM customers ORDER BY id ASC");
         while (rst.next()) {
             arrayList.add(rst.getString(1));
         }

@@ -14,9 +14,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.restaurant.bo.BoFactory;
+import lk.ijse.restaurant.bo.custom.CustomerBO;
 import lk.ijse.restaurant.dto.CustomerDTO;
 import lk.ijse.restaurant.view.CustomerTM;
-import lk.ijse.restaurant.model.CustomerModel;
 import lk.ijse.restaurant.util.Validation;
 
 import java.io.IOException;
@@ -66,6 +67,8 @@ public class ManagecustomersFormController implements Initializable {
     private Button btnUpdate;
     @FXML
     private Button btnDelete;
+
+    private CustomerBO customerBO = BoFactory.getBoFactory().getBO(BoFactory.BOTypes.CUSTOMER);
 
     private LinkedHashMap<TextField, Pattern> map = new LinkedHashMap();
     Pattern name = Pattern.compile("^([A-Z a-z]{4,40})$");
@@ -130,7 +133,7 @@ public class ManagecustomersFormController implements Initializable {
     private void getAll() {
         try {
             ObservableList<CustomerTM> observableList = FXCollections.observableArrayList();
-            List<CustomerDTO> customerDTOList = CustomerModel.getAll();
+            List<CustomerDTO> customerDTOList = customerBO.loadAllCustomers();
 
             for (CustomerDTO customerDTO : customerDTOList) {
                 observableList.add(new CustomerTM(
@@ -173,7 +176,7 @@ public class ManagecustomersFormController implements Initializable {
                     txtAddress.getText()
             );
 
-            if (CustomerModel.save(customerDTO) > 0) {
+            if (customerBO.saveCustomer(customerDTO) > 0) {
                 //setCellValueFactory();
 
                 /*ObservableList<CustomerTM> observableList = FXCollections.observableArrayList();
@@ -203,7 +206,7 @@ public class ManagecustomersFormController implements Initializable {
     private void searchOnAction(ActionEvent event) {
 
         try {
-            CustomerDTO customerDTO = CustomerModel.search(txtId.getText());
+            CustomerDTO customerDTO = customerBO.searchCustomer(txtId.getText());
             if (customerDTO != null) {
                 txtName.setText(customerDTO.getName());
                 txtNic.setText(customerDTO.getNic());
@@ -230,7 +233,7 @@ public class ManagecustomersFormController implements Initializable {
                     txtAddress.getText()
             );
 
-            if (CustomerModel.update(customerDTO) > 0) {
+            if (customerBO.updateCustomer(customerDTO) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Updated Successfully...!").show();
             }
         } catch (Exception e) {
@@ -242,7 +245,7 @@ public class ManagecustomersFormController implements Initializable {
     @FXML
     private void deleteOnAction(ActionEvent event) {
         try {
-            if (CustomerModel.delete(txtId.getText()) > 0) {
+            if (customerBO.deleteCustomer(txtId.getText()) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Deleted Successfully...!").show();
             }
         } catch (Exception e) {

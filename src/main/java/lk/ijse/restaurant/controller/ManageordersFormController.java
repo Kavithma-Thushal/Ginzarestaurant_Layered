@@ -13,15 +13,14 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.restaurant.bo.BoFactory;
+import lk.ijse.restaurant.bo.custom.OrdersBO;
 import lk.ijse.restaurant.db.DBConnection;
 import lk.ijse.restaurant.dto.OrderDTO;
 import lk.ijse.restaurant.dto.CustomerDTO;
 import lk.ijse.restaurant.dto.ItemDTO;
+import lk.ijse.restaurant.dto.Order_DetailsDTO;
 import lk.ijse.restaurant.view.OrderTM;
-import lk.ijse.restaurant.model.CustomerModel;
-import lk.ijse.restaurant.model.ItemModel;
-import lk.ijse.restaurant.model.OrderModel;
-import lk.ijse.restaurant.model.PlaceOrderModel;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.view.JasperViewer;
 
@@ -74,6 +73,8 @@ public class ManageordersFormController implements Initializable {
     @FXML
     private Label lbldateandtime;
 
+    private OrdersBO ordersBO = BoFactory.getBoFactory().getBO(BoFactory.BOTypes.ORDERS);
+
     private ObservableList<OrderTM> observableList = FXCollections.observableArrayList();
 
     @Override
@@ -95,7 +96,7 @@ public class ManageordersFormController implements Initializable {
 
     private void generateNextOrderId() {
         try {
-            String id = OrderModel.getNextOrderId();
+            String id = ordersBO.generateNextOrderId();
             txtOrderId.setText(id);
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "please try again...!").show();
@@ -114,7 +115,7 @@ public class ManageordersFormController implements Initializable {
     private void loadCustomerIds() {
         try {
             ObservableList<String> observableList = FXCollections.observableArrayList();
-            List<String> customerid = CustomerModel.loadIds();
+            List<String> customerid = ordersBO.loadCustomerIds();
 
             for (String id : customerid) {
                 observableList.add(id);
@@ -128,7 +129,7 @@ public class ManageordersFormController implements Initializable {
     private void loadItemCodes() {
         try {
             ObservableList<String> observableList = FXCollections.observableArrayList();
-            List<String> itemcodes = ItemModel.loadCodes();
+            List<String> itemcodes = ordersBO.loadItemCodes();
 
             for (String code : itemcodes) {
                 observableList.add(code);
@@ -146,7 +147,7 @@ public class ManageordersFormController implements Initializable {
         cmbCustomerId.setDisable(true);
 
         try {
-            CustomerDTO customerDTO = CustomerModel.searchById(id);
+            CustomerDTO customerDTO = ordersBO.searchByCustomerId(id);
             txtCustomerName.setText(customerDTO.getName());
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "please try again...!").show();
@@ -158,7 +159,7 @@ public class ManageordersFormController implements Initializable {
         String code = cmbItemCode.getValue();
 
         try {
-            ItemDTO itemDTO = ItemModel.searchById(code);
+            ItemDTO itemDTO = ordersBO.searchByItemCode(code);
             fillItemFields(itemDTO);
 
             txtQty.requestFocus();
@@ -260,43 +261,33 @@ public class ManageordersFormController implements Initializable {
     }
 
     @FXML
-    private void placeOrderOnAction(ActionEvent events) {
-        String oId = txtOrderId.getText();
-        String cusId = cmbCustomerId.getValue();
+    private void placeOrderOnAction(ActionEvent events) throws SQLException {
+        String orderId = txtOrderId.getText();
+        String customerId = cmbCustomerId.getValue();
+        String itemCode = cmbItemCode.getValue();
+        int qty = Integer.parseInt(txtQty.getText());
+        double total = Double.parseDouble(txtNetTotal.getText());
 
-        List<OrderDTO> orderDTOList = new ArrayList<>();
+        List<Order_DetailsDTO> order_detailsDTOList = new ArrayList<>();
+        order_detailsDTOList.add(new Order_DetailsDTO(orderId, itemCode, qty, LocalDate.now()));
 
-        /*for (int i = 0; i < tblOrderCart.getItems().size(); i++) {
-            OrderTM orderTM = observableList.get(i);
+        Boolean isPlaced = ordersBO.placeOrder(new OrderDTO(orderId, customerId, order_detailsDTOList));
+        if (isPlaced) {
+            Alert orderPlacedAlert = new Alert(Alert.AlertType.INFORMATION, "Order Placed...!");
+            orderPlacedAlert.show();
 
-            OrderDTO dto = new OrderDTO(
-                    orderTM.getCode(),
-                    orderTM.getQty(),
-                    orderTM.getUnitPrice()
-            );
-            orderDTOList.add(dto);
-        }*/
+            orderPlacedAlert.setOnHidden(event -> {
+                try {
+                    printBills();
+                } catch (Exception e) {
+                    new Alert(Alert.AlertType.ERROR, "please try again...!").show();
+                }
+            });
 
-        boolean isPlaced = false;
-        try {
-            isPlaced = PlaceOrderModel.placeOrder(oId, cusId, orderDTOList);
-            if (isPlaced) {
-                Alert ginzaAlert=new Alert(Alert.AlertType.INFORMATION, "Order Placed...!");
-                ginzaAlert.show();
-
-                ginzaAlert.setOnHidden(event -> {
-                    try {
-                        printBills();
-                    } catch (Exception e) {
-                        new Alert(Alert.AlertType.ERROR, "please try again...!").show();
-                    }
-                });
-            } else {
-                new Alert(Alert.AlertType.ERROR, "Order is Not Placed...!").show();
-            }
-        } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, "please try again...!r").show();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Order is Not Placed...!").show();
         }
+        generateNextOrderId();
     }
 
     @FXML

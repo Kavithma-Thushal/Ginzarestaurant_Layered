@@ -12,9 +12,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.restaurant.bo.BoFactory;
+import lk.ijse.restaurant.bo.custom.SalaryBO;
 import lk.ijse.restaurant.dto.SalaryDTO;
 import lk.ijse.restaurant.view.SalaryTM;
-import lk.ijse.restaurant.model.SalaryModel;
 
 import java.io.IOException;
 import java.net.URL;
@@ -49,6 +50,8 @@ public class ManagesalaryFormController implements Initializable {
     @FXML
     private Label lbldateandtime;
 
+    private SalaryBO salaryBO= BoFactory.getBoFactory().getBO(BoFactory.BOTypes.SALARY);
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd      hh:mm");
@@ -69,7 +72,7 @@ public class ManagesalaryFormController implements Initializable {
     private void getAll() {
         try {
             ObservableList<SalaryTM> observableList = FXCollections.observableArrayList();
-            List<SalaryDTO> salaryDTOList = SalaryModel.getAll();
+            List<SalaryDTO> salaryDTOList = salaryBO.loadAllSalary();
 
             for (SalaryDTO salaryDTO : salaryDTOList) {
                 observableList.add(new SalaryTM(
@@ -95,7 +98,7 @@ public class ManagesalaryFormController implements Initializable {
                     LocalDate.parse(txtDatetime.getText())
             );
 
-            if (SalaryModel.save(salaryDTO) > 0) {
+            if (salaryBO.saveSalary(salaryDTO) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Saved Successfully...!").show();
                 tblSalary.refresh();
                 getAll();
@@ -108,7 +111,7 @@ public class ManagesalaryFormController implements Initializable {
     @FXML
     private void searchOnAction(ActionEvent event) {
         try {
-            SalaryDTO salaryDTO = SalaryModel.search(txtCode.getText());
+            SalaryDTO salaryDTO = /*salaryBO.search(txtCode.getText())*/null;
             if (salaryDTO != null) {
                 txtEmployeeid.setText(salaryDTO.getEmployeeid());
                 txtAmount.setText(String.valueOf(salaryDTO.getAmount()));
@@ -129,7 +132,7 @@ public class ManagesalaryFormController implements Initializable {
                     LocalDate.parse(txtDatetime.getText())
             );
 
-            if (SalaryModel.update(salaryDTO) > 0) {
+            if (/*SalaryModel.update(salaryDTO)*/1 > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Updated Successfully...!").show();
             }
         } catch (Exception e) {
@@ -140,7 +143,7 @@ public class ManagesalaryFormController implements Initializable {
     @FXML
     private void deleteOnAction(ActionEvent event) {
         try {
-            if (SalaryModel.delete(txtCode.getText()) > 0) {
+            if (/*SalaryModel.delete(txtCode.getText())*/1 > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Deleted Successfully...!").show();
             }
         } catch (Exception e) {

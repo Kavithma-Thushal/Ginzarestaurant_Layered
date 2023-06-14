@@ -14,9 +14,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.restaurant.bo.BoFactory;
+import lk.ijse.restaurant.bo.custom.ItemBO;
 import lk.ijse.restaurant.dto.ItemDTO;
 import lk.ijse.restaurant.view.ItemTM;
-import lk.ijse.restaurant.model.ItemModel;
 import lk.ijse.restaurant.util.Validation;
 
 import java.io.IOException;
@@ -54,6 +55,8 @@ public class ManagestoreFormController implements Initializable {
     private Label lbldateandtime;
     @FXML
     private Button btnSave;
+
+    private ItemBO itemBO= BoFactory.getBoFactory().getBO(BoFactory.BOTypes.ITEM);
 
     private LinkedHashMap<TextField, Pattern> map = new LinkedHashMap();
     Pattern description = Pattern.compile("^([A-Z a-z 0-9]{4,40})$");
@@ -123,7 +126,7 @@ public class ManagestoreFormController implements Initializable {
     private void getAll() {
         try {
             ObservableList<ItemTM> observableList = FXCollections.observableArrayList();
-            List<ItemDTO> itemDTOList = ItemModel.getAll();
+            List<ItemDTO> itemDTOList = itemBO.loadAllItems();
 
             for (ItemDTO itemDTO : itemDTOList) {
                 observableList.add(new ItemTM(
@@ -149,7 +152,7 @@ public class ManagestoreFormController implements Initializable {
                     Integer.parseInt(txtQtyonhand.getText())
             );
 
-            if (ItemModel.save(itemDTO) > 0) {
+            if (itemBO.saveItem(itemDTO) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Saved Successfully...!").show();
                 tblItem.refresh();
                 getAll();
@@ -163,7 +166,7 @@ public class ManagestoreFormController implements Initializable {
     @FXML
     private void searchOnAction(ActionEvent event) {
         try {
-            ItemDTO itemDTO = ItemModel.search(txtCode.getText());
+            ItemDTO itemDTO = itemBO.searchItem(txtCode.getText());
             if (itemDTO != null) {
                 txtDescription.setText(itemDTO.getDescription());
                 txtUnitprice.setText(String.valueOf(itemDTO.getUnitprice()));
@@ -184,7 +187,7 @@ public class ManagestoreFormController implements Initializable {
                     Integer.parseInt(txtQtyonhand.getText())
             );
 
-            if (ItemModel.update(itemDTO) > 0) {
+            if (itemBO.updateItem(itemDTO) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Updated Successfully...!").show();
             }
         } catch (Exception e) {
@@ -196,7 +199,7 @@ public class ManagestoreFormController implements Initializable {
     @FXML
     private void deleteOnAction(ActionEvent event) {
         try {
-            if (ItemModel.delete(txtCode.getText()) > 0) {
+            if (itemBO.deleteItem(txtCode.getText()) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Deleted Successfully...!").show();
             }
         } catch (Exception e) {
