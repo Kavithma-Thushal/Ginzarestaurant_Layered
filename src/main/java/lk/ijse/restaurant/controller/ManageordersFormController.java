@@ -209,8 +209,6 @@ public class ManageordersFormController implements Initializable {
             observableList.add(tm);
             tblOrderCart.setItems(observableList);
             calculateNetTotal();
-
-            txtQty.setText("");
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "please try again...!").show();
         }
@@ -266,7 +264,6 @@ public class ManageordersFormController implements Initializable {
         String customerId = cmbCustomerId.getValue();
         String itemCode = cmbItemCode.getValue();
         int qty = Integer.parseInt(txtQty.getText());
-        double total = Double.parseDouble(txtNetTotal.getText());
 
         List<Order_DetailsDTO> order_detailsDTOList = new ArrayList<>();
         order_detailsDTOList.add(new Order_DetailsDTO(orderId, itemCode, qty, LocalDate.now()));

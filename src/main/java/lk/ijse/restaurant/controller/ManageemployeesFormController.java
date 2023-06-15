@@ -155,6 +155,7 @@ public class ManageemployeesFormController implements Initializable {
 
             if (employeeBO.updateEmployee(employeeDTO) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Updated Successfully...!").show();
+                getAll();
             }
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Please try again...!").show();
@@ -166,6 +167,7 @@ public class ManageemployeesFormController implements Initializable {
         try {
             if (employeeBO.deletEmployeee(txtId.getText()) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Deleted Successfully...!").show();
+                getAll();
             }
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Please try again...!").show();

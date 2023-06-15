@@ -3,6 +3,7 @@ package lk.ijse.restaurant.dao.custom.impl;
 import lk.ijse.restaurant.dao.custom.OrdersDAO;
 import lk.ijse.restaurant.dao.custom.impl.util.SQLUtil;
 import lk.ijse.restaurant.entity.Orders;
+import lk.ijse.restaurant.util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,20 +38,22 @@ public class OrdersDAOImpl implements OrdersDAO {
 
     @Override
     public String generateNextId() throws SQLException {
-        ResultSet rst = SQLUtil.execute("SELECT orderId FROM Orders ORDER BY orderId DESC LIMIT 1");
-        if (rst.next()) {
-            return splitOrderId(rst.getString(1));
+        String sql = "SELECT id FROM Orders ORDER BY id DESC LIMIT 1";
+        ResultSet resultSet = CrudUtil.execute(sql);
+
+        if (resultSet.next()) {
+            return splitOrderId(resultSet.getString(1));
         }
         return splitOrderId(null);
     }
 
-    private String splitOrderId(String currentId) {
+    private static String splitOrderId(String currentId) {
         if (currentId != null) {
-            String[] strings = currentId.split("O");
+            String[] strings = currentId.split("Or0");
             int id = Integer.parseInt(strings[1]);
             id++;
-            return "O" + String.format("%02d", id);
+            return "Or0" + id;
         }
-        return "O01";
+        return "Or01";
     }
 }

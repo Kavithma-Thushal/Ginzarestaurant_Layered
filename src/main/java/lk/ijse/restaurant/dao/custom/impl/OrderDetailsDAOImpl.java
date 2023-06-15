@@ -16,7 +16,7 @@ public class OrderDetailsDAOImpl implements OrderDetailsDAO {
 
     @Override
     public int save(Order_Details entity) throws SQLException {
-        return SQLUtil.execute("INSERT INTO order_details VALUES(?, ?, ?, ?,?)", entity.getOrderId(), entity.getItemCode(), entity.getQty(), entity.getDate());
+        return SQLUtil.execute("INSERT INTO order_details VALUES(?, ?, ?, ?)", entity.getOrderId(), entity.getItemCode(), entity.getQty(), entity.getDate());
     }
 
     @Override

@@ -189,6 +189,7 @@ public class ManagestoreFormController implements Initializable {
 
             if (itemBO.updateItem(itemDTO) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Updated Successfully...!").show();
+                getAll();
             }
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Please try again...!").show();
@@ -201,6 +202,7 @@ public class ManagestoreFormController implements Initializable {
         try {
             if (itemBO.deleteItem(txtCode.getText()) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Deleted Successfully...!").show();
+                getAll();
             }
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Please try again...!").show();

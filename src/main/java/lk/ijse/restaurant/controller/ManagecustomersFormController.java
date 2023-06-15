@@ -191,7 +191,7 @@ public class ManagecustomersFormController implements Initializable {
                 tblCustomer.setItems(observableList);*/
 
                 new Alert(Alert.AlertType.CONFIRMATION, "Saved Successfully...!").show();
-                tblCustomer.refresh();
+                //tblCustomer.refresh();
                 getAll();
             }
 
@@ -235,6 +235,7 @@ public class ManagecustomersFormController implements Initializable {
 
             if (customerBO.updateCustomer(customerDTO) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Updated Successfully...!").show();
+                getAll();
             }
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Please try again...!").show();
@@ -247,6 +248,7 @@ public class ManagecustomersFormController implements Initializable {
         try {
             if (customerBO.deleteCustomer(txtId.getText()) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Deleted Successfully...!").show();
+                getAll();
             }
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Please try again...!").show();

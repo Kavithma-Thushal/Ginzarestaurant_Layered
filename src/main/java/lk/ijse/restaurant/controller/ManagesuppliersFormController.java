@@ -136,6 +136,7 @@ public class ManagesuppliersFormController implements Initializable {
 
             if (supplierBO.updateSupplier(supplierDTO) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Updated Successfully...!").show();
+                getAll();
             }
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Please try again...!").show();
@@ -147,6 +148,7 @@ public class ManagesuppliersFormController implements Initializable {
         try {
             if (supplierBO.deleteSupplier(txtId.getText()) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Deleted Successfully...!").show();
+                getAll();
             }
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Please try again...!").show();

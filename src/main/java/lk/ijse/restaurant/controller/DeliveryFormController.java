@@ -113,6 +113,7 @@ public class DeliveryFormController implements Initializable {
 
             if (deliveryBO.saveDelivers(deliveryDTO) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Saved Successfully...!").show();
+                getAll();
             }
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Please try again...!").show();
@@ -149,6 +150,7 @@ public class DeliveryFormController implements Initializable {
 
             if (deliveryBO.updateDeliver(deliveryDTO) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Updated Successfully...!").show();
+                getAll();
             }
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Please try again...!").show();
@@ -160,6 +162,7 @@ public class DeliveryFormController implements Initializable {
         try {
             if (deliveryBO.deleteDeliver(txtCode.getText()) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Deleted Successfully...!").show();
+                getAll();
             }
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Please try again...!").show();

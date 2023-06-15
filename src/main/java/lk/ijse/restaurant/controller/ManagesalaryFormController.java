@@ -134,6 +134,7 @@ public class ManagesalaryFormController implements Initializable {
 
             if (salaryBO.updateSalary(salaryDTO) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Updated Successfully...!").show();
+                getAll();
             }
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Please try again...!").show();
@@ -145,6 +146,7 @@ public class ManagesalaryFormController implements Initializable {
         try {
             if (salaryBO.deleteSalary(txtCode.getText()) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Deleted Successfully...!").show();
+                getAll();
             }
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Please try again...!").show();
