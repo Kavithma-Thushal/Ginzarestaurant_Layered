@@ -45,23 +45,4 @@ public class SalaryDAOImpl implements SalaryDAO {
     public int delete(String code) throws SQLException {
         return SQLUtil.execute(code);
     }
-
-    @Override
-    public String generateNextId() throws SQLException {
-        ResultSet rst = SQLUtil.execute("SELECT code FROM salary ORDER BY code DESC LIMIT 1");
-        if (rst.next()) {
-            return splitSalaryCode(rst.getString(1));
-        }
-        return splitSalaryCode(null);
-    }
-
-    private String splitSalaryCode(String currentId) {
-        if (currentId != null) {
-            String[] strings = currentId.split("S");
-            int id = Integer.parseInt(strings[1]);
-            id++;
-            return "S" + String.format("%02d", id);
-        }
-        return "S01";
-    }
 }

@@ -45,23 +45,4 @@ public class SupplierDAOImpl implements SupplierDAO {
     public int delete(String id) throws SQLException {
         return SQLUtil.execute("DELETE FROM suppliers WHERE id=?",id);
     }
-
-    @Override
-    public String generateNextId() throws SQLException {
-        ResultSet rst = SQLUtil.execute("SELECT id FROM suppliers ORDER BY id DESC LIMIT 1");
-        if (rst.next()) {
-            return splitSupplierId(rst.getString(1));
-        }
-        return splitSupplierId(null);
-    }
-
-    private String splitSupplierId(String currentId) {
-        if (currentId != null) {
-            String[] strings = currentId.split("S");
-            int id = Integer.parseInt(strings[1]);
-            id++;
-            return "S" + String.format("%02d", id);
-        }
-        return "S01";
-    }
 }

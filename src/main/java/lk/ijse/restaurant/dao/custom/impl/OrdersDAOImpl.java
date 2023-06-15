@@ -6,7 +6,6 @@ import lk.ijse.restaurant.entity.Orders;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class OrdersDAOImpl implements OrdersDAO {
@@ -53,15 +52,5 @@ public class OrdersDAOImpl implements OrdersDAO {
             return "O" + String.format("%02d", id);
         }
         return "O01";
-    }
-
-    @Override
-    public List<String> loadOrderIds() throws SQLException {
-        List<String> arrayList = new ArrayList<>();
-        ResultSet rst = SQLUtil.execute("SELECT orderId FROM orders ORDER BY orderId ASC");
-        while (rst.next()) {
-            arrayList.add(rst.getString(1));
-        }
-        return arrayList;
     }
 }

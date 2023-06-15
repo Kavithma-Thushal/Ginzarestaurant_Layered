@@ -2,10 +2,7 @@ package lk.ijse.restaurant.bo.custom.impl;
 
 import lk.ijse.restaurant.bo.custom.DeliveryBO;
 import lk.ijse.restaurant.dao.DAOFactory;
-import lk.ijse.restaurant.dao.custom.CustomerDAO;
 import lk.ijse.restaurant.dao.custom.DeliveryDAO;
-import lk.ijse.restaurant.dao.custom.EmployeeDAO;
-import lk.ijse.restaurant.dao.custom.OrdersDAO;
 import lk.ijse.restaurant.dto.DeliveryDTO;
 import lk.ijse.restaurant.entity.Delivery;
 
@@ -16,9 +13,6 @@ import java.util.List;
 public class DeliveryBOImpl implements DeliveryBO {
 
     private DeliveryDAO deliveryDAO= DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOTypes.DELIVERY);
-    private CustomerDAO customerDAO=DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOTypes.CUSTOMER);
-    private EmployeeDAO employeeDAO=DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOTypes.EMPLOYEE);
-    private OrdersDAO ordersDAO=DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOTypes.ORDERS);
 
     @Override
     public List<DeliveryDTO> loadAllDelivers() throws SQLException {

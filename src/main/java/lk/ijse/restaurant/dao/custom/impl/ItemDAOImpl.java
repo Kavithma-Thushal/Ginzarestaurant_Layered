@@ -4,7 +4,6 @@ import lk.ijse.restaurant.dao.custom.ItemDAO;
 import lk.ijse.restaurant.dao.custom.impl.util.SQLUtil;
 import lk.ijse.restaurant.entity.Item;
 import lk.ijse.restaurant.entity.Order_Details;
-import lk.ijse.restaurant.entity.Supplier_Details;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -49,25 +48,6 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
     @Override
-    public String generateNextId() throws SQLException {
-        ResultSet rst = SQLUtil.execute("SELECT code FROM items ORDER BY code DESC LIMIT 1");
-        if (rst.next()) {
-            return splitItemCode(rst.getString(1));
-        }
-        return splitItemCode(null);
-    }
-
-    private String splitItemCode(String currentId) {
-        if (currentId != null) {
-            String[] strings = currentId.split("P");
-            int id = Integer.parseInt(strings[1]);
-            id++;
-            return "P" + String.format("%02d", id);
-        }
-        return "P01";
-    }
-
-    @Override
     public List<String> loadItemCodes() throws SQLException {
         List<String> arrayList = new ArrayList<>();
         ResultSet rst = SQLUtil.execute("SELECT code FROM items  ORDER BY code ASC");
@@ -80,10 +60,5 @@ public class ItemDAOImpl implements ItemDAO {
     @Override
     public int updateOrderQty(Order_Details o) throws SQLException {
         return SQLUtil.execute("UPDATE items SET qtyOnHand = (qtyOnHand - ?) WHERE code = ?", o.getQty(), o.getItemCode());
-    }
-
-    @Override
-    public int updateSupplyQty(Supplier_Details s) throws SQLException {
-        return SQLUtil.execute("UPDATE items SET qtyOnHand = (qtyOnHand + ?) WHERE code = ?", s.getQty(), s.getItemCode());
     }
 }

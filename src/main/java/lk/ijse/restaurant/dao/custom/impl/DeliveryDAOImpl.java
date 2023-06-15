@@ -45,23 +45,4 @@ public class DeliveryDAOImpl implements DeliveryDAO {
     public int delete(String code) throws SQLException {
         return SQLUtil.execute("DELETE FROM delivery WHERE code=?",code);
     }
-
-    @Override
-    public String generateNextId() throws SQLException {
-        ResultSet rst=SQLUtil.execute("SELECT code FROM delivery ORDER BY code DESC LIMIT 1");
-        if (rst.next()) {
-            return splitDeliveryCode(rst.getString(1));
-        }
-        return splitDeliveryCode(null);
-    }
-
-    private static String splitDeliveryCode(String currentId) {
-        if (currentId != null) {
-            String[] strings = currentId.split("D");
-            int id = Integer.parseInt(strings[1]);
-            id++;
-            return "D" + String.format("%02d", id);
-        }
-        return "D01";
-    }
 }

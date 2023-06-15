@@ -44,9 +44,4 @@ public class CustomerBOImpl implements CustomerBO {
     public int deleteCustomer(String id) throws SQLException {
         return customerDAO.delete(id);
     }
-
-    @Override
-    public String generateNextCustomerId() throws SQLException {
-        return customerDAO.generateNextId();
-    }
 }

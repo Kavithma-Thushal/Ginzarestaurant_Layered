@@ -47,25 +47,6 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    public String generateNextId() throws SQLException {
-        ResultSet rst = SQLUtil.execute("SELECT id FROM customers ORDER BY id DESC LIMIT 1");
-        if (rst.next()) {
-            return splitCustomerId(rst.getString(1));
-        }
-        return splitCustomerId(null);
-    }
-
-    private String splitCustomerId(String currentId) {
-        if (currentId != null) {
-            String[] strings = currentId.split("C");
-            int id = Integer.parseInt(strings[1]);
-            id++;
-            return "C" + String.format("%02d", id);
-        }
-        return "C01";
-    }
-
-    @Override
     public List<String> loadCustomerIds() throws SQLException {
         List<String> arrayList = new ArrayList<>();
         ResultSet rst = SQLUtil.execute("SELECT id FROM customers ORDER BY id ASC");

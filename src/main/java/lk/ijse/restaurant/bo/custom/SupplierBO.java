@@ -1,7 +1,6 @@
 package lk.ijse.restaurant.bo.custom;
 
 import lk.ijse.restaurant.bo.SuperBO;
-import lk.ijse.restaurant.dto.CustomerDTO;
 import lk.ijse.restaurant.dto.SupplierDTO;
 
 import java.sql.SQLException;

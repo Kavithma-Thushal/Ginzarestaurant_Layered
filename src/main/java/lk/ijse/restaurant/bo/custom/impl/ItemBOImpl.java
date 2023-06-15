@@ -48,9 +48,4 @@ public class ItemBOImpl implements ItemBO {
     public int deleteItem(String code) throws SQLException {
         return itemDAO.delete(code);
     }
-
-    @Override
-    public String generateNextItemCode() throws SQLException {
-        return itemDAO.generateNextId();
-    }
 }

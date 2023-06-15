@@ -14,12 +14,6 @@ import java.util.List;
 public class SalaryBOImpl implements SalaryBO {
 
     private SalaryDAO salaryDAO = DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOTypes.SALARY);
-    private EmployeeDAO employeeDAO=DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOTypes.EMPLOYEE);
-
-    @Override
-    public int saveSalary(SalaryDTO s) throws SQLException{
-        return salaryDAO.save(new Salary(s.getCode(),s.getEmployeeid(),s.getAmount(),s.getDate()));
-    }
 
     @Override
     public List<SalaryDTO> loadAllSalary() throws SQLException {
@@ -29,6 +23,11 @@ public class SalaryBOImpl implements SalaryBO {
             salaryDTOList.add(new SalaryDTO(s.getCode(), s.getEmployeeId(), s.getAmount(), s.getDate()));
         }
         return salaryDTOList;
+    }
+
+    @Override
+    public int saveSalary(SalaryDTO s) throws SQLException{
+        return salaryDAO.save(new Salary(s.getCode(),s.getEmployeeid(),s.getAmount(),s.getDate()));
     }
 
     @Override

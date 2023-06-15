@@ -44,9 +44,4 @@ public class EmployeeBOImpl implements EmployeeBO {
     public int deletEmployeee(String id) throws SQLException {
         return employeeDAO.delete(id);
     }
-
-    @Override
-    public String generateNextEmployeeId() throws SQLException {
-        return employeeDAO.generateNextId();
-    }
 }

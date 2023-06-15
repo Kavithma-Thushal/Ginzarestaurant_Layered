@@ -14,9 +14,7 @@ import java.util.List;
 
 public class SupplierBOImpl implements SupplierBO {
 
-    private ItemDAO itemDAO = DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOTypes.ITEM);
     private SupplierDAO supplierDAO = DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOTypes.SUPPLIER);
-    private SupplierDetailDAO supplierDetailDAO = DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOTypes.SUPPLIERDETAIL);
 
     @Override
     public List<SupplierDTO> loadAllSuppliers() throws SQLException {

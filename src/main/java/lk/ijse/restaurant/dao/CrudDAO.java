@@ -14,6 +14,4 @@ public interface CrudDAO<T> extends SuperDAO {
     int update(T entity) throws SQLException;
 
     int delete(String id) throws SQLException;
-
-    String generateNextId() throws SQLException;
 }

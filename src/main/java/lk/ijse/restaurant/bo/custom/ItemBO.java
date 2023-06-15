@@ -17,6 +17,4 @@ public interface ItemBO extends SuperBO {
     int updateItem(ItemDTO itemDTO) throws SQLException;
 
     int deleteItem(String itemCode) throws SQLException;
-
-    String generateNextItemCode() throws SQLException;
 }

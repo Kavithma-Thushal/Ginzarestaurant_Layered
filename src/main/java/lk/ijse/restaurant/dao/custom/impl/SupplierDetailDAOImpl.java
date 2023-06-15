@@ -33,9 +33,4 @@ public class SupplierDetailDAOImpl implements SupplierDetailDAO {
     public int delete(String id) throws SQLException {
         return 0;
     }
-
-    @Override
-    public String generateNextId() throws SQLException {
-        return null;
-    }
 }

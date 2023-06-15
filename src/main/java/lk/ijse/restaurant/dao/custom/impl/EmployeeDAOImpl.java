@@ -45,43 +45,4 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     public int delete(String id) throws SQLException {
         return SQLUtil.execute("DELETE FROM employees WHERE id=?", id);
     }
-
-    @Override
-    public String generateNextId() throws SQLException {
-        ResultSet rst = SQLUtil.execute("SELECT id FROM employees ORDER BY id DESC LIMIT 1");
-        if (rst.next()) {
-            return splitEmployeeId(rst.getString(1));
-        }
-        return splitEmployeeId(null);
-    }
-
-    private String splitEmployeeId(String currentId) {
-        if (currentId != null) {
-            String[] strings = currentId.split("E");
-            int id = Integer.parseInt(strings[1]);
-            id++;
-            return "E" + String.format("%02d", id);
-        }
-        return "E01";
-    }
-
-    @Override
-    public List<String> loadEmployeeIds() throws SQLException {
-        List<String> arrayList = new ArrayList<>();
-        ResultSet rst = SQLUtil.execute("SELECT id FROM employees ORDER BY id ASC");
-        while (rst.next()) {
-            arrayList.add(rst.getString(1));
-        }
-        return arrayList;
-    }
-
-    @Override
-    public List<String> loadEmployeeIdsToRepair() throws SQLException {
-        List<String> arrayList = new ArrayList<>();
-        ResultSet rst = SQLUtil.execute("SELECT id FROM employees WHERE   jobRole IN ('Technician','technician') ORDER BY id ASC");
-        while (rst.next()) {
-            arrayList.add(rst.getString(1));
-        }
-        return arrayList;
-    }
 }

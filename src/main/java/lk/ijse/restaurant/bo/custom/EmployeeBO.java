@@ -17,6 +17,4 @@ public interface EmployeeBO extends SuperBO {
     int updateEmployee(EmployeeDTO employeeDTO) throws SQLException;
 
     int deletEmployeee(String id) throws SQLException;
-
-    String generateNextEmployeeId() throws SQLException;
 }
