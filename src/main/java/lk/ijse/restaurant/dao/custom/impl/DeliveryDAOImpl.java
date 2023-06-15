@@ -28,18 +28,22 @@ public class DeliveryDAOImpl implements DeliveryDAO {
     }
 
     @Override
-    public Delivery search(String id) throws SQLException {
+    public Delivery search(String code) throws SQLException {
+        ResultSet rst=SQLUtil.execute("SELECT * FROM delivery WHERE code=?",code);
+        if(rst.next()){
+            return new Delivery(rst.getString(1),rst.getString(2),rst.getString(3),rst.getString(4),rst.getString(5),rst.getString(6));
+        }
         return null;
     }
 
     @Override
-    public int update(Delivery entity) throws SQLException {
-        return 0;
+    public int update(Delivery d) throws SQLException {
+        return SQLUtil.execute("UPDATE delivery SET employeeid=? , customerid=? , orderid=? , details=? , location=?  WHERE code=?",d.getCode(),d.getEmployeeId(),d.getCustomerId(),d.getOrderId(),d.getDetails(),d.getLocation());
     }
 
     @Override
-    public int delete(String id) throws SQLException {
-        return 0;
+    public int delete(String code) throws SQLException {
+        return SQLUtil.execute("DELETE FROM delivery WHERE code=?",code);
     }
 
     @Override

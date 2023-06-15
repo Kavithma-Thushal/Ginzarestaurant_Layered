@@ -4,9 +4,7 @@ import lk.ijse.restaurant.bo.custom.SalaryBO;
 import lk.ijse.restaurant.dao.DAOFactory;
 import lk.ijse.restaurant.dao.custom.EmployeeDAO;
 import lk.ijse.restaurant.dao.custom.SalaryDAO;
-import lk.ijse.restaurant.dto.EmployeeDTO;
 import lk.ijse.restaurant.dto.SalaryDTO;
-import lk.ijse.restaurant.entity.Employee;
 import lk.ijse.restaurant.entity.Salary;
 
 import java.sql.SQLException;
@@ -34,18 +32,18 @@ public class SalaryBOImpl implements SalaryBO {
     }
 
     @Override
-    public String generateNextSalaryCode() throws SQLException {
-        return salaryDAO.generateNextId();
+    public SalaryDTO searchSalary(String code) throws SQLException {
+        Salary s=salaryDAO.search(code);
+        return new SalaryDTO(s.getCode(),s.getEmployeeId(),s.getAmount(),s.getDate());
     }
 
     @Override
-    public List<String> loadEmployeeIds() throws SQLException {
-        return employeeDAO.loadEmployeeIds();
+    public int updateSalary(SalaryDTO s) throws SQLException {
+        return salaryDAO.update(new Salary(s.getCode(),s.getEmployeeid(),s.getAmount(),s.getDate()));
     }
 
     @Override
-    public EmployeeDTO searchByEmployeeId(String id) throws SQLException {
-        Employee e=employeeDAO.search(id);
-        return new EmployeeDTO(e.getId(),e.getName(),e.getContact(),e.getJobRole(),e.getUsername(),e.getPassword());
+    public int deleteSalary(String code) throws SQLException {
+        return salaryDAO.delete(code);
     }
 }

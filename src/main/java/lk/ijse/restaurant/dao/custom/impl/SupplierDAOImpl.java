@@ -29,17 +29,21 @@ public class SupplierDAOImpl implements SupplierDAO {
 
     @Override
     public Supplier search(String id) throws SQLException {
+        ResultSet rst=SQLUtil.execute("SELECT * FROM suppliers WHERE id=?",id);
+        if (rst.next()){
+            return new Supplier(rst.getString(1),rst.getString(2),rst.getString(3),rst.getString(4));
+        }
         return null;
     }
 
     @Override
-    public int update(Supplier entity) throws SQLException {
-        return 0;
+    public int update(Supplier s) throws SQLException {
+        return SQLUtil.execute("UPDATE suppliers SET name=? , contact=? , address=? WHERE id=?",s.getName(),s.getContact(),s.getAddress(),s.getId());
     }
 
     @Override
     public int delete(String id) throws SQLException {
-        return 0;
+        return SQLUtil.execute("DELETE FROM suppliers WHERE id=?",id);
     }
 
     @Override

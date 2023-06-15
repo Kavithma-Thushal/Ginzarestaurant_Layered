@@ -97,7 +97,7 @@ public class ManagesuppliersFormController implements Initializable {
                     txtAddress.getText()
             );
 
-            if (/*SupplierModel.save(supplierDTO)*/1 > 0) {
+            if (supplierBO.saveSupplier(supplierDTO) > 0) {
 
                 new Alert(Alert.AlertType.CONFIRMATION, "Saved Successfully...!").show();
                 tblsupplier.refresh();
@@ -112,7 +112,7 @@ public class ManagesuppliersFormController implements Initializable {
     @FXML
     private void searchOnAction(ActionEvent event) {
         try {
-            SupplierDTO supplierDTO = /*SupplierModel.search(txtId.getText())*/null;
+            SupplierDTO supplierDTO = supplierBO.searchSupplier(txtId.getText());
             if (supplierDTO != null) {
                 txtName.setText(supplierDTO.getName());
                 txtContact.setText(supplierDTO.getContact());
@@ -134,7 +134,7 @@ public class ManagesuppliersFormController implements Initializable {
                     txtAddress.getText()
             );
 
-            if (/*SupplierModel.update(supplierDTO)*/1 > 0) {
+            if (supplierBO.updateSupplier(supplierDTO) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Updated Successfully...!").show();
             }
         } catch (Exception e) {
@@ -145,7 +145,7 @@ public class ManagesuppliersFormController implements Initializable {
     @FXML
     private void deleteOnAction(ActionEvent event) {
         try {
-            if (/*SupplierModel.delete(txtId.getText())*/1 > 0) {
+            if (supplierBO.deleteSupplier(txtId.getText()) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Deleted Successfully...!").show();
             }
         } catch (Exception e) {

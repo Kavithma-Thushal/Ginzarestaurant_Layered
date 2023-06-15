@@ -122,7 +122,7 @@ public class DeliveryFormController implements Initializable {
     @FXML
     private void searchOnAction(ActionEvent event) {
         try {
-            DeliveryDTO deliveryDTO = /*deliveryBO.search(txtCode.getText())*/null;
+            DeliveryDTO deliveryDTO = deliveryBO.searchDeliver(txtCode.getText());
             if (deliveryDTO != null) {
                 txtEmployeeid.setText(deliveryDTO.getEmployeeid());
                 txtCustomerid.setText(deliveryDTO.getCustomerid());
@@ -147,7 +147,7 @@ public class DeliveryFormController implements Initializable {
                     txtLocation.getText()
             );
 
-            if (/*DeliveryModel.update(deliveryDTO)*/1 > 0) {
+            if (deliveryBO.updateDeliver(deliveryDTO) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Updated Successfully...!").show();
             }
         } catch (Exception e) {
@@ -158,7 +158,7 @@ public class DeliveryFormController implements Initializable {
     @FXML
     private void deleteOnAction(ActionEvent event) {
         try {
-            if (/*DeliveryModel.delete(txtCode.getText())*/1 > 0) {
+            if (deliveryBO.deleteDeliver(txtCode.getText()) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Deleted Successfully...!").show();
             }
         } catch (Exception e) {

@@ -111,7 +111,7 @@ public class ManagesalaryFormController implements Initializable {
     @FXML
     private void searchOnAction(ActionEvent event) {
         try {
-            SalaryDTO salaryDTO = /*salaryBO.search(txtCode.getText())*/null;
+            SalaryDTO salaryDTO = salaryBO.searchSalary(txtCode.getText());
             if (salaryDTO != null) {
                 txtEmployeeid.setText(salaryDTO.getEmployeeid());
                 txtAmount.setText(String.valueOf(salaryDTO.getAmount()));
@@ -132,7 +132,7 @@ public class ManagesalaryFormController implements Initializable {
                     LocalDate.parse(txtDatetime.getText())
             );
 
-            if (/*SalaryModel.update(salaryDTO)*/1 > 0) {
+            if (salaryBO.updateSalary(salaryDTO) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Updated Successfully...!").show();
             }
         } catch (Exception e) {
@@ -143,7 +143,7 @@ public class ManagesalaryFormController implements Initializable {
     @FXML
     private void deleteOnAction(ActionEvent event) {
         try {
-            if (/*SalaryModel.delete(txtCode.getText())*/1 > 0) {
+            if (salaryBO.deleteSalary(txtCode.getText()) > 0) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Deleted Successfully...!").show();
             }
         } catch (Exception e) {

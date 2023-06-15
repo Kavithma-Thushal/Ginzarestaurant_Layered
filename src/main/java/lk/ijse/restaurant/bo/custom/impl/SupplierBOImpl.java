@@ -5,15 +5,9 @@ import lk.ijse.restaurant.dao.DAOFactory;
 import lk.ijse.restaurant.dao.custom.ItemDAO;
 import lk.ijse.restaurant.dao.custom.SupplierDAO;
 import lk.ijse.restaurant.dao.custom.SupplierDetailDAO;
-import lk.ijse.restaurant.db.DBConnection;
-import lk.ijse.restaurant.dto.ItemDTO;
 import lk.ijse.restaurant.dto.SupplierDTO;
-import lk.ijse.restaurant.dto.Supplier_DetailsDTO;
-import lk.ijse.restaurant.entity.Item;
 import lk.ijse.restaurant.entity.Supplier;
-import lk.ijse.restaurant.entity.Supplier_Details;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,59 +29,23 @@ public class SupplierBOImpl implements SupplierBO {
     }
 
     @Override
-    public String generateNextSupplierId() throws SQLException {
-        return supplierDAO.generateNextId();
+    public int saveSupplier(SupplierDTO s) throws SQLException {
+        return supplierDAO.save(new Supplier(s.getId(),s.getName(),s.getContact(),s.getAddress()));
     }
 
     @Override
-    public List<String> loadItemCodes() throws SQLException {
-        return itemDAO.loadItemCodes();
+    public SupplierDTO searchSupplier(String id) throws SQLException {
+        Supplier s=supplierDAO.search(id);
+        return new SupplierDTO(s.getId(),s.getName(),s.getContact(),s.getAddress());
     }
 
     @Override
-    public ItemDTO searchByItemCode(String code) throws SQLException {
-        Item i = itemDAO.search(code);
-        return new ItemDTO(i.getCode(), i.getDescription(), i.getUnitPrice(), i.getQtyOnHand());
+    public int updateSupplier(SupplierDTO s) throws SQLException {
+        return supplierDAO.update(new Supplier(s.getId(),s.getName(),s.getContact(),s.getAddress()));
     }
 
     @Override
-    public boolean addSupplier(SupplierDTO dto) {
-        try (Connection connection = DBConnection.getInstance().getConnection()) {
-            connection.setAutoCommit(false);
-
-            int supplier_Save = supplierDAO.save(new Supplier(dto.getId(), dto.getName(), dto.getContact(), dto.getAddress()));
-            if (supplier_Save > 0) {
-                boolean success = true;
-
-                for (Supplier_DetailsDTO s : dto.getSupplier_DetailsDTOList()) {
-
-                    int supplierItem_Update = itemDAO.updateSupplyQty(new Supplier_Details(s.getSupplierId(), s.getItemCode(), s.getQty()));
-                    if (supplierItem_Update <= 0) {
-                        success = false;
-                        break;
-                    }
-
-                    int supplierDetails_Save = supplierDetailDAO.save(new Supplier_Details(s.getSupplierId(), s.getItemCode(), s.getQty()));
-                    if (supplierDetails_Save <= 0) {
-                        success = false;
-                        break;
-                    }
-                }
-
-                if (success) {
-                    connection.commit();
-                    connection.setAutoCommit(true);
-                    return true;
-                }
-            }
-
-            connection.rollback();
-            connection.setAutoCommit(true);
-            return false;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
+    public int deleteSupplier(String id) throws SQLException {
+        return supplierDAO.delete(id);
     }
 }

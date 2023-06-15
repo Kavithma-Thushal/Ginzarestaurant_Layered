@@ -1,7 +1,7 @@
 package lk.ijse.restaurant.bo.custom;
 
 import lk.ijse.restaurant.bo.SuperBO;
-import lk.ijse.restaurant.dto.ItemDTO;
+import lk.ijse.restaurant.dto.CustomerDTO;
 import lk.ijse.restaurant.dto.SupplierDTO;
 
 import java.sql.SQLException;
@@ -11,11 +11,11 @@ public interface SupplierBO extends SuperBO {
 
     List<SupplierDTO> loadAllSuppliers() throws SQLException;
 
-    String generateNextSupplierId() throws SQLException;
+    int saveSupplier(SupplierDTO supplierDTO) throws SQLException;
 
-    List<String> loadItemCodes() throws SQLException;
+    SupplierDTO searchSupplier(String id) throws SQLException;
 
-    ItemDTO searchByItemCode(String itemCode) throws SQLException;
+    int updateSupplier(SupplierDTO supplierDTO) throws SQLException;
 
-    boolean addSupplier(SupplierDTO supplierDTO);
+    int deleteSupplier(String id) throws SQLException;
 }

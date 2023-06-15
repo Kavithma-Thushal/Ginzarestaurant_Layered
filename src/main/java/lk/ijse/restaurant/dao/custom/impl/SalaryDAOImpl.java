@@ -28,18 +28,22 @@ public class SalaryDAOImpl implements SalaryDAO {
     }
 
     @Override
-    public Salary search(String id) throws SQLException {
+    public Salary search(String code) throws SQLException {
+        ResultSet rst=SQLUtil.execute("SELECT * FROM salary WHERE code=?",code);
+        if (rst.next()){
+            new Salary(rst.getString(1),rst.getString(2),rst.getDouble(3),rst.getDate(4).toLocalDate());
+        }
         return null;
     }
 
     @Override
-    public int update(Salary entity) throws SQLException {
-        return 0;
+    public int update(Salary s) throws SQLException {
+        return SQLUtil.execute("UPDATE salary SET employeeid=? , amount=? , date=? WHERE code=?",s.getCode(),s.getEmployeeId(),s.getAmount(),s.getDate());
     }
 
     @Override
-    public int delete(String id) throws SQLException {
-        return 0;
+    public int delete(String code) throws SQLException {
+        return SQLUtil.execute(code);
     }
 
     @Override

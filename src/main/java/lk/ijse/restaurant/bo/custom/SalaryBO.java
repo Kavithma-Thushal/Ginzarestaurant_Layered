@@ -1,7 +1,6 @@
 package lk.ijse.restaurant.bo.custom;
 
 import lk.ijse.restaurant.bo.SuperBO;
-import lk.ijse.restaurant.dto.EmployeeDTO;
 import lk.ijse.restaurant.dto.SalaryDTO;
 
 import java.sql.SQLException;
@@ -13,9 +12,9 @@ public interface SalaryBO extends SuperBO {
 
     List<SalaryDTO> loadAllSalary() throws SQLException;
 
-    String generateNextSalaryCode() throws SQLException;
+    SalaryDTO searchSalary(String id) throws SQLException;
 
-    List<String> loadEmployeeIds() throws SQLException;
+    int updateSalary(SalaryDTO salaryDTO) throws SQLException;
 
-    EmployeeDTO searchByEmployeeId(String employeeId) throws SQLException;
+    int deleteSalary(String id) throws SQLException;
 }

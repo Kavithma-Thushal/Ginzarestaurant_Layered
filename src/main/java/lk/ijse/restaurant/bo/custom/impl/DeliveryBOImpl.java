@@ -6,12 +6,8 @@ import lk.ijse.restaurant.dao.custom.CustomerDAO;
 import lk.ijse.restaurant.dao.custom.DeliveryDAO;
 import lk.ijse.restaurant.dao.custom.EmployeeDAO;
 import lk.ijse.restaurant.dao.custom.OrdersDAO;
-import lk.ijse.restaurant.dto.CustomerDTO;
 import lk.ijse.restaurant.dto.DeliveryDTO;
-import lk.ijse.restaurant.dto.EmployeeDTO;
-import lk.ijse.restaurant.entity.Customer;
 import lk.ijse.restaurant.entity.Delivery;
-import lk.ijse.restaurant.entity.Employee;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -40,34 +36,18 @@ public class DeliveryBOImpl implements DeliveryBO {
     }
 
     @Override
-    public String generateNextDeliverCode() throws SQLException {
-        return deliveryDAO.generateNextId();
+    public DeliveryDTO searchDeliver(String code) throws SQLException {
+        Delivery d=deliveryDAO.search(code);
+        return new DeliveryDTO(d.getCode(),d.getEmployeeId(),d.getCustomerId(),d.getOrderId(),d.getDetails(),d.getLocation());
     }
 
     @Override
-    public List<String> loadCustomerIds() throws SQLException {
-        return customerDAO.loadCustomerIds();
+    public int updateDeliver(DeliveryDTO d) throws SQLException {
+        return deliveryDAO.update(new Delivery(d.getCode(),d.getEmployeeid(),d.getCustomerid(),d.getOrderid(),d.getDetails(),d.getLocation()));
     }
 
     @Override
-    public CustomerDTO searchByCustomerId(String id) throws SQLException {
-        Customer c=customerDAO.search(id);
-        return new CustomerDTO(c.getId(),c.getName(),c.getNic(),c.getEmail(),c.getContact(),c.getAddress());
-    }
-
-    @Override
-    public List<String> loadEmployeeIds() throws SQLException {
-        return employeeDAO.loadEmployeeIds();
-    }
-
-    @Override
-    public EmployeeDTO searchByEmployeeId(String id) throws SQLException {
-        Employee e=employeeDAO.search(id);
-        return new EmployeeDTO(e.getId(),e.getName(),e.getContact(),e.getJobRole(),e.getUsername(),e.getPassword());
-    }
-
-    @Override
-    public List<String> loadOrderIds() throws SQLException {
-        return ordersDAO.loadOrderIds();
+    public int deleteDeliver(String code) throws SQLException {
+        return deliveryDAO.delete(code);
     }
 }
