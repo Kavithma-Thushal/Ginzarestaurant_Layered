@@ -12,7 +12,7 @@ Technology :-<br/>
 Functions :-<br/>
 ✅Admin and Cashier can log into the Software<br/>
 ✅Admin can Manage Employees ,Suppliers, Store, Orders, Salary and also generate reports<br/>
-✅Cashier can Manage Customers, Orders, Delivery, Repair, Custom Build and only view the store
+✅Cashier can Manage Customers, Orders, Delivery and only view the store
 
 ### How to use
 * Clone this https://github.com/Thushal2001/Ginzarestaurant_Layered.git
