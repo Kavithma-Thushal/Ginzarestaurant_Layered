@@ -1,4 +1,4 @@
-# Ginzarestaurant_Layered
+# ✌️Ginzarestaurant-Layered
 Restaurant using java 11 ,javafx &amp; maven in Layered-Architecture
 
 Technology :-<br/>
@@ -15,19 +15,19 @@ Functions :-<br/>
 ✅Cashier can Manage Customers, Orders, Delivery and only view the store
 
 ### How to use
-* Clone this https://github.com/Thushal2001/Ginzarestaurant_Layered.git
-* Add project database [Project Database](https://github.com/Thushal2001/Ginzarestaurant_Layered/blob/master/Project%20Database)
+* Clone this https://github.com/Thushal2001/Ginzarestaurant-Layered.git
+* Add project database [Project Database](https://github.com/Thushal2001/Ginzarestaurant-Layered/blob/master/src/main/resources/schema/schema.sql)
 * Reload the `pom.xml`
 * Run the Application
 
 ### Version
-2023.0.0.2
+1.0.0
 
 ### License
-© 2023 All Right Reserved Designed By Kavithma Thushal<br/>
+⭐© 2023 All Right Reserved Designed By Kavithma Thushal<br/>
 This project is licensed under the [MIT](LICENSE) license.
 
-If you hava any bugs or issues ,If you want to explain code pleace contact me on :<br/> 
+⭐If you hava any bugs or issues ,If you want to explain code pleace contact me on :<br/> 
 [kavithmathushal9007@gmail.com](https://www.kavithmathushal9007@gmail.com)
 
 ![Screenshot 2023-07-02 232006](https://github.com/Thushal2001/Ginzarestaurant/assets/125787087/c9ebe806-469b-4070-8a3f-ab395f6a9c89)
